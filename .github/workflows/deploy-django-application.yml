@@ -1,0 +1,95 @@
+name: Deploy Django Application
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deployment
+  cancel-in-progress: true
+
+jobs:
+  ci-tests:
+    name: Code Quality & Checks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.13
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.13'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Run Django system check
+        env:
+          SECRET_KEY: 'dummy-secret-key-for-ci-only'
+          DEBUG: 'True'
+          ALLOWED_HOSTS: '*'
+        run: python manage.py check
+
+  deploy:
+    name: Deploy to Production
+    needs: ci-tests
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy via SSH
+        uses: appleboy/ssh-action@v1.2.2
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          port: ${{ secrets.PORT }}
+          key: ${{ secrets.SSH_KEY }}
+          
+          timeout: 30s
+          command_timeout: 10m
+          
+          script: |
+            set -e
+          
+            PROJECT_DIR="${{ vars.PROJECT_DIR }}"
+            SERVICE_NAME="${{ vars.SERVICE_NAME }}"
+
+            echo "==> Checking requirements..."
+            if [ ! -d "$PROJECT_DIR" ]; then
+              echo "Error: Directory $PROJECT_DIR does not exist." >&2
+              exit 1
+            fi
+
+            cd "$PROJECT_DIR"
+
+            if [ ! -d ".venv" ]; then
+              echo "Error: .venv is missing." >&2
+              exit 1
+            fi
+
+            echo "==> Syncing code with origin/main..."
+            git fetch --all
+            git reset --hard origin/main
+
+            echo "==> Activating virtual environment..."
+            source .venv/bin/activate
+
+            echo "==> Installing dependencies..."
+            pip install -r requirements.txt
+
+            echo "==> Applying migrations..."
+            python manage.py migrate --noinput
+
+            echo "==> Collecting static files..."
+            python manage.py collectstatic --noinput
+
+            echo "==> Restarting services..."
+            sudo systemctl restart "$SERVICE_NAME"
+            sudo systemctl reload nginx
+
+            echo "==> Deployment completed successfully."
