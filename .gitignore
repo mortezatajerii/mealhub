@@ -216,3 +216,24 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# added by me
+.gitignore
+
+__pycache__/
+*.pyc
+.venv/
+env/
+venv/
+.env
+db.sqlite3
+media/
+staticfiles/
+.vscode/
+.idea/
+.DS_Store
+*.log
+
+staticfiles/
+static/
+media/
