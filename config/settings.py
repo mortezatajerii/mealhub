@@ -136,6 +136,8 @@ USE_TZ = True
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+FORCE_SCRIPT_NAME = "/projects/mealhub"
+
 STATIC_URL = "/projects/mealhub/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
@@ -154,7 +156,7 @@ STORAGES = {
 
 # Media files (Uploaded by Users)
 
-MEDIA_URL = "/media/"
+MEDIA_URL = "/projects/mealhub/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
