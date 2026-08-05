@@ -1,0 +1,116 @@
+:root {
+  /* ============================================
+     Seyyed Mahdi Brand Colors
+     ============================================ */
+  --brand-green: #04611f;
+  --brand-green-dark: #034518;
+  --brand-green-light: #e6f2ea;
+  --brand-gold: #ffd200;
+  --brand-gold-dark: #cca800;
+
+  /* ============================================
+     Primary & Accent Colors Override
+     ============================================ */
+  --color-primary: var(--brand-green);
+  --color-subtitle: var(--brand-gold-dark);
+
+  /* ============================================
+     Headings & Text
+     ============================================ */
+  --color-heading: #ffffff; /* سفید برای تم تیره */
+  --color-heading-wv: #1a2e22; /* سبز-خاکستری تیره برای تم روشن */
+  --color-body: #4a5a50; /* خاکستری-سبز برای متن بدنه */
+  --color-body-white: #2d3d33; /* متن تیره‌تر */
+
+  /* ============================================
+     Backgrounds & Gradients
+     ============================================ */
+  --background-color-1: linear-gradient(145deg, #1a2e22, #23342b);
+  --background-color-2: #1f2d25;
+
+  --gradient-box-w: linear-gradient(145deg, #e8f0ea, #ffffff);
+  --gradient-red-hover: linear-gradient(
+    145deg,
+    var(--brand-green),
+    var(--brand-gold-dark)
+  );
+
+  /* ============================================
+     Shadows (نئومورفیک با تن سبز)
+     ============================================ */
+  --shadow-1: 10px 10px 19px #151f19, -10px -10px 19px #1f2d25;
+  --shadow-2: inset 21px 21px 19px #141d18, inset -21px -21px 19px #1e2a23;
+
+  /* سایه سفید برای المان‌های روشن */
+  --shadow-white-3: 5px 5px 15px #c8d6cc, -5px -5px 15px #ffffff;
+
+  /* ============================================
+     Borders & Utility Colors
+     ============================================ */
+  --color-border: #d4e0d8; /* حاشیه‌های ملایم با تن سبز */
+  --color-lightn: #c4d4c9;
+  --color-light: #dfe8e2;
+  --color-lighter: #d0dbd4;
+  --color-lightest: #eff4f1;
+}
+
+/* ============================================
+   Component-Specific Overrides
+   ============================================ */
+
+/* دکمه‌های اصلی */
+.rn-btn,
+.btn-primary {
+  background: var(--brand-green);
+  border-color: var(--brand-green);
+}
+
+.rn-btn:hover,
+.btn-primary:hover {
+  background: var(--gradient-red-hover);
+  border-color: var(--brand-gold-dark);
+}
+
+/* لینک‌ها */
+a {
+  color: var(--brand-green);
+}
+
+a:hover {
+  color: var(--brand-gold-dark);
+}
+
+/* تگ‌های مهارت (از قسمت قبلی) */
+.skill-tag {
+  background: var(--brand-green-light);
+  color: var(--brand-green);
+  border: 1px solid var(--brand-green);
+}
+
+.skill-tag:hover {
+  background: var(--brand-green);
+  color: #ffffff;
+}
+
+/* آیکون‌های اصول کاری */
+.principle-card .icon {
+  color: var(--brand-gold);
+  background: var(--brand-green);
+}
+
+/* CTA Banner با پس‌زمینه سبز */
+.cta-banner,
+.call-to-action {
+  background: var(--brand-green);
+  color: #ffffff;
+}
+
+.cta-banner .highlight {
+  color: var(--brand-gold);
+}
+
+/* Navigation Active State */
+.mainmenu li a.active,
+.mainmenu li a:hover {
+  color: var(--brand-gold-dark);
+}
