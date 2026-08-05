@@ -1,0 +1,254 @@
+{% load static %}
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <title>{{ site_settings.site_title }}</title>
+    <meta name="description" content="{{ site_settings.meta_description }}" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+
+    <!-- Favicon -->
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{{ site_settings.favicon.url }}"
+    />
+
+    <!-- CSS 
+    ============================================ -->
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/slick.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/slick-theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/aos.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/plugins/feature.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/fontawesome/css/all.min.css' %}"
+    />
+    <!-- Style css -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260805-1" />
+  </head>
+
+  <body
+    class="template-color-1 spybody white-version"
+    data-spy="scroll"
+    data-target=".navbar-example2"
+    data-offset="150"
+  >
+    <div class="site-top">
+      {% if topbar_ad %}
+      <div class="topbar-ad d-block">
+        {% if topbar_ad.link_url %}
+        <a
+          href="{{ topbar_ad.link_url }}"
+          class="topbar-ad__link"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          {% endif %}
+
+          <img
+            src="{{ topbar_ad.desktop_image.url }}"
+            alt="Topbar advertisement"
+            class="topbar-ad__image d-none d-md-block"
+          />
+          <img
+            src="{{ topbar_ad.mobile_image.url }}"
+            alt="Topbar advertisement"
+            class="topbar-ad__image d-md-none"
+          />
+
+          {% if topbar_ad.link_url %}
+        </a>
+        {% endif %}
+      </div>
+      {% endif %}
+
+      <!-- Start Header -->
+      <header
+        class="rn-header haeder-default black-logo-version header--fixed header--sticky"
+      >
+        <div
+          class="header-wrapper rn-popup-mobile-menu m--0 row align-items-center"
+        >
+          <!-- Start Header Left -->
+          <div class="col-lg-2 col-6">
+            <div class="header-left">
+              <div class="logo">
+                <a href="{% url 'home' %}">
+                  <img src="{{ site_settings.logo_header.url }}" alt="logo" />
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- End Header Left -->
+          <!-- Start Header Center -->
+          <div class="col-lg-10 col-6">
+            <div class="header-center">
+              <nav
+                id="sideNav"
+                class="mainmenu-nav navbar-example2 d-none d-xl-block onepagenav"
+              >
+                <!-- Start Mainmanu Nav -->
+                <ul class="primary-menu nav nav-pills">
+                  {% for item in desktop_menu_items %}
+                  <li class="nav-item">
+                    <a class="nav-link" href="{{ item.url }}"
+                      >{{ item.title }}</a
+                    >
+                  </li>
+                  {% endfor %}
+                </ul>
+
+                <!-- End Mainmanu Nav -->
+              </nav>
+              <div class="humberger-menu d-block d-xl-none">
+                <button
+                  class="menu-activation"
+                  type="button"
+                  aria-label="Open Menu"
+                >
+                  <i data-feather="menu"></i>
+                </button>
+              </div>
+              <!-- Start Header Right  -->
+              <div class="header-right"></div>
+              <!-- End Header Right  -->
+            </div>
+          </div>
+          <!-- End Header Center -->
+        </div>
+      </header>
+    </div>
+    <!-- End Header Area -->
+    <!-- Start Popup Mobile Menu  -->
+    <div class="popup-mobile-menu">
+      <div class="inner">
+        <div class="menu-top">
+          <div class="menu-header">
+            <a class="logo" href="{% url 'home' %}">
+              <img
+                src="{% static 'images/logo/logos-circle.png' %}"
+                alt="Personal Portfolio"
+              />
+            </a>
+
+            <div class="close-button">
+              <button class="close-menu-activation close">
+                <i data-feather="x"></i>
+              </button>
+            </div>
+          </div>
+          <p class="discription">
+            مرتضی تاجری — توسعه‌دهنده Backend متخصص در پایتون، جنگو و
+            اتوماسیون‌های عملیاتی.
+          </p>
+        </div>
+        <div class="content">
+          <ul class="primary-menu nav nav-pills onepagenav">
+            {% for item in mobile_menu_items %}
+            <li class="nav-item">
+              <a class="nav-link smoth-animation" href="{{ item.url }}">
+                {{ item.title }}
+              </a>
+            </li>
+            {% endfor %}
+          </ul>
+
+          <!-- social sharea area -->
+          <div class="social-share-style-1 mt--40">
+            <span class="title">پیدا کردن من</span>
+            <ul class="social-share d-flex liststyle">
+              <li class="GitHub">
+                <a href="https://github.com/mortezatajerii/"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-github"
+                  >
+                    <path
+                      d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                    ></path></svg
+                ></a>
+              </li>
+              <li class="linkedin">
+                <a href="https://www.linkedin.com/in/mortezatajerii/"
+                  ><svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="24"
+                    height="24"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="feather feather-linkedin"
+                  >
+                    <path
+                      d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"
+                    ></path>
+                    <rect x="2" y="9" width="4" height="12"></rect>
+                    <circle cx="4" cy="4" r="2"></circle></svg
+                ></a>
+              </li>
+            </ul>
+          </div>
+          <!-- end -->
+        </div>
+      </div>
+    </div>
+    <!-- End Popup Mobile Menu  -->
+
+    <main class="main-page-wrapper"></main>
+
+    <!-- Start Footer Area -->
+    <div class="rn-footer-area rn-section-gap section-separator">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="footer-area text-center">
+              <div class="logo">
+                <a href="{% url 'home' %}">
+                  <img src="{{ site_settings.logo_footer.url }}" alt="logo" />
+                </a>
+              </div>
+              <p class="description mt--30" dir="rtl">
+                {{ site_settings.footer_copyright }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- End Footer Area -->
+
+    <!-- JS ============================================ -->
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'js/vendor/modernizer.min.js' %}"></script>
+    <script src="{% static 'js/vendor/feather.min.js' %}"></script>
+    <script src="{% static 'js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
+    <script src="{% static 'js/vendor/text-type.js' %}"></script>
+    <script src="{% static 'js/vendor/wow.js' %}"></script>
+    <script src="{% static 'js/vendor/aos.js' %}"></script>
+    <script src="{% static 'js/vendor/particles.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-one-page-nav.js' %}"></script>
+    <!-- main JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>
