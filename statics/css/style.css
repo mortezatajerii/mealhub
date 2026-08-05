@@ -11651,17 +11651,21 @@ body.template-color-1 {
 
 /* Description */
 
-.popup-mobile-menu .inner .menu-top p.discription {
-  font-size: 16px;
-
-  line-height: 29px;
-
+.popup-mobile-menu .inner .menu-top .discription {
   margin-top: 20px;
-
+  max-width: 90%;
+}
+.popup-mobile-menu .inner .menu-top .discription p {
+  font-size: 16px;
+  line-height: 29px;
   color: var(--color-lighten);
   padding-left: 0;
   text-align: justify;
-  max-width: 90%;
+  margin-bottom: 8px;
+}
+
+.popup-mobile-menu .inner .menu-top .discription p:last-child {
+  margin-bottom: 0;
 }
 
 /* Open state */
