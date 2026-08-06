@@ -80,7 +80,7 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
-                'siteconfig.context_processors.site_settings',
+                "siteconfig.context_processors.site_settings",
             ],
         },
     },
@@ -118,6 +118,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "accounts.User"
 
 # Internationalization
 # https://docs.djangoproject.com/en/6.0/topics/i18n/
@@ -178,6 +179,15 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "standard",
         },
+        "otp_file": {
+            "class": "logging.FileHandler",
+            "filename": "logs/otp.log", 
+            "formatter": "standard",
+        },
+    },
+    "root": {
+        "handlers": ["console"],
+        "level": "INFO",
     },
     "loggers": {
         "django": {
@@ -190,5 +200,18 @@ LOGGING = {
             "level": "WARNING",
             "propagate": False,
         },
+        "myapp.services": {
+            "handlers": ["otp_file", "console"],
+            "level": "INFO",
+            "propagate": False,
+        },
     },
 }
+
+
+# SMS.ir
+SMSIR_API_KEY = config("SMSIR_API_KEY")
+SMSIR_TEMPLATE_ID = config("SMSIR_TEMPLATE_ID")
+
+# OTP
+OTP_TTL_SECONDS = 180
