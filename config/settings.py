@@ -181,7 +181,7 @@ LOGGING = {
         },
         "otp_file": {
             "class": "logging.FileHandler",
-            "filename": "logs/otp.log", 
+            "filename": "logs/otp.log",
             "formatter": "standard",
         },
     },
@@ -210,8 +210,8 @@ LOGGING = {
 
 
 # SMS.ir
-SMSIR_API_KEY = config("SMSIR_API_KEY")
-SMSIR_TEMPLATE_ID = config("SMSIR_TEMPLATE_ID")
+SMSIR_API_KEY = config("SMSIR_API_KEY", default="")
+SMSIR_TEMPLATE_ID = config("SMSIR_TEMPLATE_ID", default=0, cast=int)
 
 # OTP
 OTP_TTL_SECONDS = 180
