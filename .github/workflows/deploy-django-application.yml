@@ -34,7 +34,11 @@ jobs:
           SECRET_KEY: 'dummy-secret-key-for-ci-only'
           DEBUG: 'True'
           ALLOWED_HOSTS: '*'
-        run: python manage.py check
+        run: |
+          python manage.py check
+          python manage.py makemigrations --check --dry-run
+          python manage.py migrate --run-syncdb
+
 
   deploy:
     name: Deploy to Production
