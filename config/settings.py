@@ -13,7 +13,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
-from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -58,6 +57,7 @@ INSTALLED_APPS = [
     "siteconfig",
     "organizations",
     "accounts",
+    "menus",
 ]
 
 MIDDLEWARE = [
@@ -137,11 +137,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
-BASE_DIR = Path(__file__).resolve().parent.parent
 
-FORCE_SCRIPT_NAME = "/projects/mealhub"
+_SCRIPT_NAME = config("DJANGO_SCRIPT_NAME", default="")
 
-STATIC_URL = "/projects/mealhub/static/"
+FORCE_SCRIPT_NAME = _SCRIPT_NAME or None
+
+STATIC_URL = f"{_SCRIPT_NAME}/static/" if _SCRIPT_NAME else "/static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
 STATICFILES_DIRS = [
@@ -159,7 +160,7 @@ STORAGES = {
 
 # Media files (Uploaded by Users)
 
-MEDIA_URL = "/projects/mealhub/media/"
+MEDIA_URL = f"{_SCRIPT_NAME}/media/" if _SCRIPT_NAME else "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
