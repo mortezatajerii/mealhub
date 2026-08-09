@@ -17,7 +17,7 @@ class ReservationAdmin(admin.ModelAdmin):
     list_filter = (
         "is_finalized",
         "organization",
-        "daily_menu",
+        "daily_menu__date",
     )
 
     search_fields = (
@@ -26,6 +26,12 @@ class ReservationAdmin(admin.ModelAdmin):
         "user__last_name",
         "organization__name",
         "food_item__name",
+    )
+
+    autocomplete_fields = (
+        "user",
+        "daily_menu",
+        "food_item",
     )
 
     readonly_fields = (

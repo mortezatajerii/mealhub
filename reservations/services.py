@@ -1,6 +1,8 @@
 import datetime
 from django.contrib.auth import get_user_model
-from menus.models import DailyMenu, FoodItem
+from django.db import transaction
+from menus.models import DailyMenu
+from wallets.services import reserve_balance 
 from .models import Reservation
 
 User = get_user_model()
@@ -12,16 +14,47 @@ def create_weekly_reservations():
     week_start = today + datetime.timedelta(days=days_until_saturday)
     week_end = week_start + datetime.timedelta(days=5)
 
-    menus = DailyMenu.objects.filter(date__range=(week_start, week_end))
-    default_item = FoodItem.objects.first()
+    menus = DailyMenu.objects.filter(
+        date__range=(week_start, week_end)
+    ).prefetch_related("items")
+
+    users = list(
+        User.objects.filter(is_active=True, organization__isnull=False).select_related(
+            "organization"
+        )
+    )
+
+    results = {"created": 0, "skipped": 0, "insufficient": 0}
 
     for menu in menus:
-        for user in User.objects.filter(is_active=True):
-            Reservation.objects.get_or_create(
-                user=user,
-                daily_menu=menu,
-                defaults={
-                    "organization": user.organization,
-                    "food_item": default_item,
-                },
-            )
+        default_item = menu.items.first()
+        if default_item is None:
+            continue
+
+        for user in users:
+            with transaction.atomic():
+                reservation, created = Reservation.objects.get_or_create(
+                    user=user,
+                    daily_menu=menu,
+                    defaults={
+                        "organization": user.organization,
+                        "food_item": default_item,
+                        "price_snapshot": default_item.price,
+                    },
+                )
+                if not created:
+                    results["skipped"] += 1
+                    continue
+
+                ok = reserve_balance(
+                    organization=user.organization,
+                    amount=default_item.price,
+                    reservation=reservation,
+                )
+                if not ok:
+                    reservation.delete()
+                    results["insufficient"] += 1
+                else:
+                    results["created"] += 1
+
+    return results
