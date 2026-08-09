@@ -58,6 +58,7 @@ INSTALLED_APPS = [
     "organizations",
     "accounts",
     "menus",
+    "reservations",
 ]
 
 MIDDLEWARE = [
