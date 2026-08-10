@@ -1,18 +1,11 @@
-{% extends "base.html" %}
-
-{% block title %}میل‌هاب | {{ site_settings.site_title }}{% endblock %}
-
-{% block meta_description %}
-میل‌هاب؛ مدیریت و برنامه‌ریزی غذای سازمانی
-{% endblock %}
-
-{% block content %}
+{% extends "base.html" %} {% block title %}میل‌هاب | {{ site_settings.site_title
+}}{% endblock %} {% block meta_description %} میل‌هاب؛ مدیریت و برنامه‌ریزی غذای
+سازمانی {% endblock %} {% block content %}
 
 <!-- Start Welcome Area -->
 <section class="inbo-home-welcome rn-section-gap section-separator">
   <div class="container">
     <div class="row justify-content-center">
-
       <div
         class="col-12 col-lg-10 col-xl-8"
         data-aos="fade-up"
@@ -20,66 +13,53 @@
         data-aos-once="true"
       >
         <div class="section-title text-center">
+          <span class="subtitle"> میل‌هاب </span>
 
-          <span class="subtitle">
-            میل‌هاب
-          </span>
-
-          <h1 class="title mb-3">
-            به میل‌هاب خوش آمدید
-          </h1>
+          <h1 class="title mb-3">به میل‌هاب خوش آمدید</h1>
+          {% if perms.accounts.EMPLOYEE_CREATE %}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'accounts:EMPLOYEE_CREATE' %}">
+              <i data-feather="user-plus" aria-hidden="true"></i>
+              <span>افزودن کاربر</span>
+            </a>
+          </li>
+          {% endif %}
 
           <p class="description mb-4">
-            مدیریت ساده و یکپارچه غذای سازمانی؛
-            از انتخاب منو تا مدیریت سفارش‌ها.
+            مدیریت ساده و یکپارچه غذای سازمانی؛ از انتخاب منو تا مدیریت
+            سفارش‌ها.
           </p>
 
           <div class="inbo-home-actions">
-
             {% if user.is_authenticated %}
 
-              <a
-                href="#"
-                class="rn-btn"
-              >
-                ورود به پنل
-              </a>
+            <a href="{% url 'accounts:dashboard' %}" class="rn-btn">
+              ورود به پنل
+            </a>
 
             {% else %}
 
-              <a
-                href="{% url 'accounts:login' %}"
-                class="rn-btn"
-              >
-                ورود به حساب کاربری
-              </a>
+            <a href="{% url 'accounts:login' %}" class="rn-btn">
+              ورود به حساب کاربری
+            </a>
 
-              <a
-                href="{% url 'accounts:register' %}"
-                class="rn-btn"
-              >
-                ایجاد حساب کاربری
-              </a>
+            <a href="{% url 'accounts:register' %}" class="rn-btn">
+              ایجاد حساب کاربری
+            </a>
 
             {% endif %}
-
           </div>
-
         </div>
       </div>
-
     </div>
   </div>
 </section>
 <!-- End Welcome Area -->
 
-
 <!-- Start Features Area -->
 <section class="inbo-home-features rn-section-gap section-separator">
   <div class="container">
-
     <div class="row">
-
       <div class="col-12">
         <div
           class="section-title text-center mb-5"
@@ -87,20 +67,16 @@
           data-aos-duration="500"
           data-aos-once="true"
         >
-          <span class="subtitle">
-            امکانات میل‌هاب
-          </span>
+          <span class="subtitle"> امکانات میل‌هاب </span>
 
-          <h2 class="title mb-3">
-            همه‌چیز برای مدیریت بهتر غذا
-          </h2>
+          <h2 class="title mb-3">همه‌چیز برای مدیریت بهتر غذا</h2>
 
           <p class="description">
-            ابزارهای مورد نیاز سازمان برای مدیریت منو، کارکنان و سفارش‌های غذایی.
+            ابزارهای مورد نیاز سازمان برای مدیریت منو، کارکنان و سفارش‌های
+            غذایی.
           </p>
         </div>
       </div>
-
 
       <div
         class="col-lg-4 col-md-6 mb-4"
@@ -109,22 +85,15 @@
         data-aos-once="true"
       >
         <div class="inbo-home-feature">
-
           <div class="inbo-home-feature-icon">
             <i class="feather-users"></i>
           </div>
 
-          <h4>
-            مدیریت کارکنان
-          </h4>
+          <h4>مدیریت کارکنان</h4>
 
-          <p>
-            مدیریت اطلاعات کارکنان و دسترسی آن‌ها به خدمات سازمانی.
-          </p>
-
+          <p>مدیریت اطلاعات کارکنان و دسترسی آن‌ها به خدمات سازمانی.</p>
         </div>
       </div>
-
 
       <div
         class="col-lg-4 col-md-6 mb-4"
@@ -134,22 +103,15 @@
         data-aos-once="true"
       >
         <div class="inbo-home-feature">
-
           <div class="inbo-home-feature-icon">
             <i class="feather-calendar"></i>
           </div>
 
-          <h4>
-            مدیریت منوی هفتگی
-          </h4>
+          <h4>مدیریت منوی هفتگی</h4>
 
-          <p>
-            ایجاد، مدیریت و نمایش منوی غذایی هفتگی سازمان.
-          </p>
-
+          <p>ایجاد، مدیریت و نمایش منوی غذایی هفتگی سازمان.</p>
         </div>
       </div>
-
 
       <div
         class="col-lg-4 col-md-6 mb-4"
@@ -159,24 +121,16 @@
         data-aos-once="true"
       >
         <div class="inbo-home-feature">
-
           <div class="inbo-home-feature-icon">
             <i class="feather-shopping-bag"></i>
           </div>
 
-          <h4>
-            مدیریت سفارش‌ها
-          </h4>
+          <h4>مدیریت سفارش‌ها</h4>
 
-          <p>
-            مدیریت ساده و منظم سفارش‌های غذایی کارکنان.
-          </p>
-
+          <p>مدیریت ساده و منظم سفارش‌های غذایی کارکنان.</p>
         </div>
       </div>
-
     </div>
-
   </div>
 </section>
 <!-- End Features Area -->

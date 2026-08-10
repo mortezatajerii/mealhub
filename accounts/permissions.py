@@ -1,6 +1,7 @@
 # accounts/permissions.py
 from rest_framework.permissions import BasePermission
 from .models import User
+from django.contrib.auth import get_user_model
 
 WILDCARD = "*"
 Role = User.Role
@@ -187,3 +188,74 @@ class HasPermission(BasePermission):
         if permission is None:
             return False
         return user_has_perm(request.user, permission)
+
+ROLE_DESCRIPTIONS = {
+    "super_admin": "دسترسی کامل به تمام پلتفرم، سازمان‌ها و تنظیمات",
+    "platform_manager": "مدیریت عملیات پلتفرم و سازمان‌ها بدون دسترسی به تنظیمات ریشه",
+    "menu_manager": "ثبت و ویرایش منو و آیتم‌های غذایی",
+    "account_manager": "پشتیبانی مشتریان و مدیریت حساب سازمان‌ها",
+    "restaurant_manager": "مدیریت رستوران و تحویل سفارش‌ها",
+    "finance": "مشاهده و مدیریت تراکنش‌ها و کیف پول سازمان",
+    "company_owner": "مدیریت کامل سازمان، دپارتمان‌ها و کاربران آن",
+    "department_admin": "مدیریت کاربران و رزروهای دپارتمان خود",
+    "employee": "رزرو غذا و مشاهده تراکنش‌های شخصی",
+}
+
+
+def _assignable_matrix():
+    R = get_user_model().Role
+    return {
+        R.SUPER_ADMIN: (
+            R.SUPER_ADMIN,
+            R.PLATFORM_MANAGER,
+            R.MENU_MANAGER,
+            R.ACCOUNT_MANAGER,
+            R.RESTAURANT_MANAGER,
+            R.FINANCE,
+            R.COMPANY_OWNER,
+            R.DEPARTMENT_ADMIN,
+            R.EMPLOYEE,
+        ),
+        R.PLATFORM_MANAGER: (
+            R.MENU_MANAGER,
+            R.ACCOUNT_MANAGER,
+            R.RESTAURANT_MANAGER,
+            R.FINANCE,
+            R.COMPANY_OWNER,
+            R.DEPARTMENT_ADMIN,
+            R.EMPLOYEE,
+        ),
+        R.ACCOUNT_MANAGER: (R.COMPANY_OWNER, R.DEPARTMENT_ADMIN, R.EMPLOYEE),
+        R.COMPANY_OWNER: (R.DEPARTMENT_ADMIN, R.FINANCE, R.EMPLOYEE),
+        R.DEPARTMENT_ADMIN: (R.EMPLOYEE,),
+    }
+
+
+def assignable_roles(actor):
+    if not actor or not actor.is_authenticated:
+        return []
+    roles = _assignable_matrix().get(actor.role, ())
+    labels = dict(get_user_model().Role.choices)
+    return [
+        {
+            "value": role,
+            "label": labels[role],
+            "description": ROLE_DESCRIPTIONS.get(role, ""),
+        }
+        for role in roles
+    ]
+
+
+def can_assign_role(actor, role):
+    return role in {item["value"] for item in assignable_roles(actor)}
+
+
+def assignment_scope(actor):
+    R = get_user_model().Role
+    if actor.role in (R.SUPER_ADMIN, R.PLATFORM_MANAGER, R.ACCOUNT_MANAGER):
+        return Scope.PLATFORM
+    if actor.role in (R.COMPANY_OWNER, R.FINANCE):
+        return Scope.ORGANIZATION
+    if actor.role == R.DEPARTMENT_ADMIN:
+        return Scope.DEPARTMENT
+    return Scope.SELF

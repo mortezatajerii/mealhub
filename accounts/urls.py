@@ -4,7 +4,7 @@ from .template_views import (
     LoginTemplateView,
     RegisterTemplateView,
     DashboardTemplateView,
-    logout_view,
+    LogoutTemplateView,
 )
 
 app_name = "accounts"
@@ -23,7 +23,7 @@ template_patterns = [
     path("register/", RegisterTemplateView.as_view(), name="register"),
     path("dashboard/", DashboardTemplateView.as_view(), name="dashboard"),
     # path("profile/edit/", ProfileUpdateView.as_view(), name="profile_edit"),
-    path("logout/", logout_view, name="logout"),
+    path("logout/", LogoutTemplateView.as_view(), name="logout"),
 ]
 
 urlpatterns = api_patterns + template_patterns

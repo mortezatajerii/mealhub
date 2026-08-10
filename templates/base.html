@@ -90,20 +90,35 @@
             <nav
               id="sideNav"
               class="mainmenu-nav navbar-example2 d-none d-xl-block onepagenav"
+              aria-label="منوی اصلی"
             >
               <ul class="primary-menu nav nav-pills">
+                <!-- Main Menu Items -->
                 {% for item in desktop_menu_items %}
                 <li class="nav-item">
                   <a class="nav-link" href="{{ item.url }}">
                     {{ item.title }}
                   </a>
                 </li>
-                {% endfor %}
+                {% endfor %} {% if request.user.is_authenticated %}
+
+                <!-- Add User -->
+                {% if 'employee.create' in user_perms %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{% url 'accounts:user-create' %}">
+                    <i data-feather="user-plus" aria-hidden="true"></i>
+                    <span>افزودن کاربر</span>
+                  </a>
+                </li>
+                {% endif %} {% endif %}
               </ul>
             </nav>
+
             <!-- Desktop User Actions -->
             <div class="inbo-header-actions">
               {% if request.user.is_authenticated %}
+
+              <!-- User Dashboard -->
               <a
                 href="{% url 'accounts:dashboard' %}"
                 class="inbo-user-button"
@@ -115,28 +130,36 @@
                     src="{{ user.profile.avatar.url }}"
                     alt="{{ user.full_name|default:user.phone_number }}"
                   />
-                  {% else %} <i data-feather="user"></i> {% endif %}
+                  {% else %}
+                  <i data-feather="user" aria-hidden="true"></i>
+                  {% endif %}
                 </span>
+
                 <span class="inbo-user-info">
                   <span class="inbo-user-name">
                     {{ user.full_name|default:user.phone_number }}
                   </span>
+
                   <span class="inbo-user-role">
                     {{ user.get_role_display }}
                   </span>
                 </span>
+
                 <i
                   data-feather="chevron-down"
                   class="inbo-user-chevron"
                   aria-hidden="true"
                 ></i>
               </a>
+
+              <!-- Logout -->
               <form
                 method="post"
                 action="{% url 'accounts:logout' %}"
                 class="inbo-logout-form"
               >
                 {% csrf_token %}
+
                 <button
                   type="submit"
                   class="inbo-logout-button"
@@ -145,7 +168,10 @@
                   <i data-feather="log-out" aria-hidden="true"></i>
                 </button>
               </form>
+
               {% else %}
+
+              <!-- Login -->
               <a
                 href="{% url 'accounts:login' %}"
                 class="rn-btn inbo-login-button"
@@ -153,6 +179,8 @@
                 <i data-feather="log-in" aria-hidden="true"></i>
                 <span>ورود</span>
               </a>
+
+              <!-- Register -->
               <a
                 href="{% url 'accounts:register' %}"
                 class="rn-btn inbo-register-button"
@@ -160,6 +188,7 @@
                 <i data-feather="user-plus" aria-hidden="true"></i>
                 <span>ثبت‌نام</span>
               </a>
+
               {% endif %}
             </div>
 
@@ -220,14 +249,8 @@
 
         <div class="content">
           <nav aria-label="منوی موبایل">
-            {% for item in mobile_menu_items %}
-            <li class="nav-item">
-              <a class="nav-link smoth-animation" href="{{ item.url }}">
-                {{ item.title }}
-              </a>
-            </li>
-            {% endfor %} {% if request.user.is_authenticated %} django
             <ul class="primary-menu nav nav-pills onepagenav">
+              <!-- Main Menu Items -->
               {% for item in mobile_menu_items %}
               <li class="nav-item">
                 <a class="nav-link smoth-animation" href="{{ item.url }}">
@@ -235,6 +258,19 @@
                 </a>
               </li>
               {% endfor %} {% if request.user.is_authenticated %}
+
+              <!-- Add User -->
+              {% if 'employee.create' in user_perms %}
+              <li class="nav-item">
+                <a
+                  href="{% url 'accounts:user-create' %}"
+                  class="nav-link inbo-mobile-action"
+                >
+                  <i data-feather="user-plus" aria-hidden="true"></i>
+                  <span>افزودن کاربر جدید</span>
+                </a>
+              </li>
+              {% endif %}
 
               <!-- User Dashboard -->
               <li class="nav-item inbo-mobile-account-item">
@@ -266,6 +302,7 @@
                   <i
                     data-feather="chevron-left"
                     class="inbo-mobile-user-arrow"
+                    aria-hidden="true"
                   ></i>
                 </a>
               </li>
@@ -283,7 +320,7 @@
                     type="submit"
                     class="nav-link inbo-mobile-logout-link"
                   >
-                    <i data-feather="log-out"></i>
+                    <i data-feather="log-out" aria-hidden="true"></i>
                     <span>خروج از حساب</span>
                   </button>
                 </form>
@@ -297,7 +334,7 @@
                   class="nav-link inbo-mobile-action inbo-mobile-login-link"
                   href="{% url 'accounts:login' %}"
                 >
-                  <i data-feather="log-in"></i>
+                  <i data-feather="log-in" aria-hidden="true"></i>
                   <span>ورود</span>
                 </a>
               </li>
@@ -308,7 +345,7 @@
                   class="nav-link inbo-mobile-action inbo-mobile-register-link"
                   href="{% url 'accounts:register' %}"
                 >
-                  <i data-feather="user-plus"></i>
+                  <i data-feather="user-plus" aria-hidden="true"></i>
                   <span>ثبت‌نام</span>
                 </a>
               </li>
@@ -316,96 +353,6 @@
               {% endif %}
             </ul>
           </nav>
-          <!-- Mobile Account -->
-          <div class="inbo-mobile-account">
-            {% if request.user.is_authenticated %}
-
-            <li class="nav-item inbo-mobile-account-item">
-              <a
-                class="nav-link inbo-mobile-user-link"
-                href="{% url 'accounts:dashboard' %}"
-              >
-                <span class="inbo-mobile-user-avatar">
-                  {% if user.profile.avatar %}
-                  <img
-                    src="{{ user.profile.avatar.url }}"
-                    alt="{{ user.full_name|default:user.phone_number }}"
-                  />
-                  {% else %}
-                  <i data-feather="user"></i>
-                  {% endif %}
-                </span>
-
-                <span class="inbo-mobile-user-details">
-                  <span class="inbo-mobile-user-name">
-                    {{ user.full_name|default:user.phone_number }}
-                  </span>
-
-                  <span class="inbo-mobile-user-role">
-                    {{ user.get_role_display }}
-                  </span>
-                </span>
-
-                <i
-                  data-feather="chevron-left"
-                  class="inbo-mobile-user-arrow"
-                ></i>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <form
-                method="post"
-                action="{% url 'accounts:logout' %}"
-                class="inbo-mobile-logout-form"
-              >
-                {% csrf_token %}
-
-                <button type="submit" class="nav-link inbo-mobile-logout-link">
-                  <i data-feather="log-out"></i>
-                  <span>خروج از حساب</span>
-                </button>
-              </form>
-            </li>
-
-            {% else %}
-
-            <li class="nav-item">
-              <a
-                class="nav-link inbo-mobile-action inbo-mobile-login-link"
-                href="{% url 'accounts:login' %}"
-              >
-                <i data-feather="log-in"></i>
-                <span>ورود</span>
-              </a>
-            </li>
-
-            <li class="nav-item">
-              <a
-                class="nav-link inbo-mobile-action inbo-mobile-register-link"
-                href="{% url 'accounts:register' %}"
-              >
-                <i data-feather="user-plus"></i>
-                <span>ثبت‌نام</span>
-              </a>
-            </li>
-
-            {% endif %}
-            <a
-              href="{% url 'accounts:login' %}"
-              class="inbo-mobile-action inbo-mobile-login-link"
-            >
-              <i data-feather="log-in" aria-hidden="true"></i> <span>ورود</span>
-            </a>
-            <a
-              href="{% url 'accounts:register' %}"
-              class="inbo-mobile-action inbo-mobile-register-link"
-            >
-              <i data-feather="user-plus" aria-hidden="true"></i>
-              <span>ثبت‌نام</span>
-            </a>
-            {% endif %}
-          </div>
         </div>
       </div>
     </div>

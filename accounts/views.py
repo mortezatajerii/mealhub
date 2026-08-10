@@ -12,10 +12,23 @@ from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework_simplejwt.exceptions import TokenError
 from rest_framework.exceptions import PermissionDenied
 from django.contrib.auth import authenticate
-
+from django.contrib import messages
+from django.contrib.auth.mixins import LoginRequiredMixin
+from django.core.exceptions import PermissionDenied
+from django.shortcuts import redirect, render
+from django.views import View
+from organizations.models import Department, Organization
 from .models import User
 from .serializers import UserSerializer, MeSerializer, RegisterSerializer
-from .permissions import HasPermission, Perm, Scope, get_user_scope
+from .permissions import (
+    HasPermission,
+    Perm,
+    Scope,
+    get_user_scope,
+    assignable_roles,
+    assignment_scope,
+    can_assign_role,
+)
 
 # from .services import send_otp_sms, SMSError
 
@@ -161,6 +174,85 @@ class RegisterView(generics.CreateAPIView):
     serializer_class = RegisterSerializer
 
 
+def user_create_form_context(actor):
+    scope = assignment_scope(actor)
+    roles = assignable_roles(actor)
+
+    if scope == Scope.PLATFORM:
+        organizations = Organization.objects.all().order_by("name")
+        departments = Department.objects.all().order_by("name")
+    elif scope == Scope.ORGANIZATION:
+        organizations = Organization.objects.filter(pk=actor.organization_id)
+        departments = Department.objects.filter(organization_id=actor.organization_id)
+    elif scope == Scope.DEPARTMENT:
+        organizations = Organization.objects.filter(pk=actor.organization_id)
+        departments = Department.objects.filter(pk=actor.department_id)
+    else:
+        organizations = Organization.objects.none()
+        departments = Department.objects.none()
+
+    departments_map = {}
+    for department in departments:
+        departments_map.setdefault(str(department.organization_id), []).append(
+            {"id": department.id, "name": department.name}
+        )
+
+    return {
+        "assignable_roles": roles,
+        "assignment_scope": scope,
+        "organizations": organizations,
+        "departments_json": json.dumps(departments_map),
+        "lock_organization": scope in (Scope.ORGANIZATION, Scope.DEPARTMENT),
+        "lock_department": scope == Scope.DEPARTMENT,
+    }
+
+
+class UserCreateView(LoginRequiredMixin, View):
+    template_name = "accounts/user_create.html"
+
+    def get(self, request):
+        context = user_create_form_context(request.user)
+        if not context["assignable_roles"]:
+            raise PermissionDenied("شما اجازه افزودن کاربر ندارید.")
+        return render(request, self.template_name, context)
+
+    def post(self, request):
+        actor = request.user
+        role = request.POST.get("role", "")
+        if not can_assign_role(actor, role):
+            raise PermissionDenied("شما اجازه اختصاص این نقش را ندارید.")
+
+        scope = assignment_scope(actor)
+        if scope == Scope.DEPARTMENT:
+            organization_id = actor.organization_id
+            department_id = actor.department_id
+        elif scope == Scope.ORGANIZATION:
+            organization_id = actor.organization_id
+            department_id = request.POST.get("department") or None
+        else:
+            organization_id = request.POST.get("organization") or None
+            department_id = request.POST.get("department") or None
+
+        serializer = UserSerializer(
+            data={
+                "phone_number": request.POST.get("phone_number", "").strip(),
+                "full_name": request.POST.get("full_name", "").strip(),
+                "role": role,
+                "organization": organization_id,
+                "department": department_id,
+            }
+        )
+        if not serializer.is_valid():
+            context = user_create_form_context(actor)
+            context.update({"errors": serializer.errors, "form_data": request.POST})
+
+            return render(request, self.template_name, context)
+
+        serializer.save()
+
+        messages.success(request, "کاربر با موفقیت اضافه شد.")
+
+        return redirect("dashboard")
 # class SendOTPView(APIView):
 #     permission_classes = [AllowAny]
 

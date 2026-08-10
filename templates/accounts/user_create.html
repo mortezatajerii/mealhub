@@ -1,0 +1,91 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="rn-section-gap">
+    <div class="container">
+        <div class="inbo-form-container">
+            <div class="inbo-form-card">
+                <h3>افزودن کاربر جدید</h3>
+                <form method="post" id="userForm">
+                    {% csrf_token %}
+
+                    <div class="inbo-form-group">
+                        <label class="inbo-form-label-required">شماره موبایل</label>
+                        <input type="tel" name="phone_number" class="inbo-form-input {% if errors.phone_number %}error{% endif %}" required dir="ltr" value="{{ form_data.phone_number }}">
+                        {% if errors.phone_number %}<span class="inbo-form-error-text">{{ errors.phone_number.0 }}</span>{% endif %}
+                    </div>
+
+                    <div class="inbo-form-group">
+                        <label class="inbo-form-label-required">نام کامل</label>
+                        <input type="text" name="full_name" class="inbo-form-input {% if errors.full_name %}error{% endif %}" required value="{{ form_data.full_name }}">
+                    </div>
+
+                    <div class="inbo-form-group">
+                        <label class="inbo-form-label-required">سازمان</label>
+                        <select name="organization" id="orgSelect" class="inbo-form-select" {% if lock_organization %}disabled{% endif %} required>
+                            <option value="">انتخاب کنید...</option>
+                            {% for org in organizations %}
+                            <option value="{{ org.id }}" {% if lock_organization or form_data.organization == org.id|stringformat:'s' %}selected{% endif %}>{{ org.name }}</option>
+                            {% endfor %}
+                        </select>
+                        {% if lock_organization %}<input type="hidden" name="organization" value="{{ user.organization_id }}">{% endif %}
+                    </div>
+
+                    <div class="inbo-form-group">
+                        <label>دپارتمان</label>
+                        <select name="department" id="deptSelect" class="inbo-form-select" {% if lock_department %}disabled{% endif %}>
+                            <option value="">همه دپارتمان‌ها</option>
+                        </select>
+                        {% if lock_department %}<input type="hidden" name="department" value="{{ user.department_id }}">{% endif %}
+                    </div>
+
+                    <div class="inbo-form-group">
+                        <label class="inbo-form-label-required">نقش کاربری</label>
+                        <div class="inbo-radio-group">
+                            {% for role in assignable_roles %}
+                            <label class="inbo-radio-option">
+                                <input type="radio" name="role" value="{{ role.value }}" required {% if form_data.role == role.value %}checked{% endif %}>
+                                <div class="inbo-radio-content">
+                                    <div class="inbo-radio-title">{{ role.label }}</div>
+                                    <div class="inbo-radio-description">{{ role.description }}</div>
+                                </div>
+                            </label>
+                            {% endfor %}
+                        </div>
+                    </div>
+
+                    <div class="inbo-form-actions">
+                        <button type="submit" class="rn-btn btn-solid-gradient"><span>ثبت کاربر</span></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{{ departments_map|json_script:"departments-data" }}
+<script>
+    const departmentsMap = JSON.parse(
+        document.getElementById("departments-data").textContent
+    );
+    const orgSelect = document.getElementById("orgSelect");
+    const deptSelect = document.getElementById('deptSelect');
+    const currentDeptId = "{{ form_data.department|default:'' }}";
+
+    function updateDepartments(orgId) {
+        deptSelect.innerHTML = '<option value="">همه دپارتمان‌ها</option>';
+        if (orgId && departmentsMap[orgId]) {
+            departmentsMap[orgId].forEach(dept => {
+                const option = document.createElement('option');
+                option.value = dept.id;
+                option.textContent = dept.name;
+                if (String(dept.id) === currentDeptId) option.selected = true;
+                deptSelect.appendChild(option);
+            });
+        }
+    }
+
+    orgSelect.addEventListener('change', (e) => updateDepartments(e.target.value));
+    updateDepartments(orgSelect.value); // Initial load
+</script>
+{% endblock %}

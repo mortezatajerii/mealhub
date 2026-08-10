@@ -33,12 +33,15 @@ class LoginTemplateView(View):
                 request.session.set_expiry(0)
 
             messages.success(
-                request, f"خوش آمدید، {user.get_full_name() or user.phone_number}"
+                request,
+                f"خوش آمدید، {user.get_full_name() or user.phone_number}",
             )
 
             next_url = request.GET.get("next") or request.POST.get("next")
+
             if next_url:
                 return redirect(next_url)
+
             return redirect("accounts:dashboard")
 
         return render(request, self.template_name, {"form": form})
@@ -133,19 +136,7 @@ class DashboardTemplateView(LoginRequiredMixin, TemplateView):
 
 
 class LogoutTemplateView(View):
-
-    def get(self, request):
-        return redirect("accounts:login")
-
     def post(self, request):
         logout(request)
         messages.info(request, "شما با موفقیت از سیستم خارج شدید.")
         return redirect("accounts:login")
-
-
-@login_required
-def logout_view(request):
-    """خروج از سیستم"""
-    logout(request)
-    messages.info(request, "شما با موفقیت از سیستم خارج شدید.")
-    return redirect("accounts:login")
