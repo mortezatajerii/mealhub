@@ -1179,3 +1179,169 @@ AUTH SUBMIT BUTTON
     padding-top: 55px;
   }
 }
+/* =========================================================
+   INBO HOME
+========================================================= */
+
+.inbo-home-welcome {
+  padding-top: 110px;
+  padding-bottom: 90px;
+}
+
+.inbo-home-welcome .section-title {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inbo-home-welcome .title {
+  margin-bottom: 18px;
+}
+
+.inbo-home-welcome .description {
+  max-width: 680px;
+  margin-left: auto;
+  margin-right: auto;
+  line-height: 2;
+}
+
+.inbo-home-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  margin-top: 28px;
+}
+
+.inbo-home-actions .rn-btn {
+  min-width: 170px;
+  min-height: 48px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 24px;
+
+  border-radius: 7px;
+
+  box-shadow: none;
+}
+
+.inbo-home-actions .rn-btn:hover {
+  box-shadow: none;
+}
+
+/* =========================================================
+   HOME FEATURES
+========================================================= */
+
+.inbo-home-features {
+  padding-top: 90px;
+  padding-bottom: 100px;
+}
+
+.inbo-home-features .section-title {
+  max-width: 760px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.inbo-home-feature {
+  height: 100%;
+
+  padding: 32px 28px;
+
+  background: #fff;
+
+  border: 1px solid #e8e8e8;
+  border-radius: 10px;
+
+  text-align: center;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inbo-home-feature:hover {
+  border-color: rgba(255, 1, 79, 0.2);
+  transform: translateY(-3px);
+}
+
+.inbo-home-feature-icon {
+  width: 54px;
+  height: 54px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  color: var(--color-primary, #ff014f);
+
+  background: rgba(255, 1, 79, 0.06);
+
+  border-radius: 10px;
+}
+
+.inbo-home-feature-icon i {
+  font-size: 24px;
+}
+
+.inbo-home-feature h4 {
+  margin-bottom: 12px;
+}
+
+.inbo-home-feature p {
+  margin-bottom: 0;
+
+  color: #777;
+
+  line-height: 1.9;
+}
+
+/* =========================================================
+   RESPONSIVE
+========================================================= */
+
+@media (max-width: 991px) {
+  .inbo-home-welcome {
+    padding-top: 85px;
+    padding-bottom: 70px;
+  }
+
+  .inbo-home-features {
+    padding-top: 70px;
+    padding-bottom: 80px;
+  }
+}
+
+@media (max-width: 767px) {
+  .inbo-home-welcome {
+    padding-top: 65px;
+    padding-bottom: 55px;
+  }
+
+  .inbo-home-actions {
+    gap: 10px;
+    margin-top: 24px;
+  }
+
+  .inbo-home-actions .rn-btn {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .inbo-home-features {
+    padding-top: 55px;
+    padding-bottom: 65px;
+  }
+
+  .inbo-home-feature {
+    padding: 28px 22px;
+  }
+}
