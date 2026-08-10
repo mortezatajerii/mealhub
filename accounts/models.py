@@ -89,6 +89,9 @@ class User(AbstractUser):
             raise ValidationError("لطفاً شرکت این کاربر را مشخص کنید.")
         if self.is_platform_user and self.organization_id is not None:
             raise ValidationError("کاربر تیم پلتفرم نباید به شرکتی وصل باشد.")
+        if self.department and self.organization:
+            if self.department.organization != self.organization:
+                raise ValidationError("دپارتمان انتخاب شده متعلق به این شرکت نیست.")
 
     class Meta:
         verbose_name = "کاربر"

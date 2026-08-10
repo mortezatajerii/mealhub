@@ -1,5 +1,6 @@
 from django.db import models
 from django.conf import settings
+from django.core.exceptions import ValidationError
 
 from organizations.models import Organization
 from menus.models import DailyMenu, FoodItem
@@ -18,6 +19,11 @@ class Reservation(models.Model):
     food_item = models.ForeignKey(
         FoodItem, on_delete=models.PROTECT, related_name="reservations"
     )
+
+    def clean(self):
+        if self.food_item not in self.daily_menu.items.all():
+            raise ValidationError("این غذا در منوی روز انتخابی وجود ندارد.")
+
     price_snapshot = models.DecimalField(
         max_digits=10,
         decimal_places=2,

@@ -38,6 +38,11 @@ class Perm:
     INVOICE_ISSUE = "invoice.issue"
     WALLET_CREDIT = "wallet.credit"
 
+    # employee
+    EMPLOYEE_VIEW = "employee.view"
+    EMPLOYEE_CREATE = "employee.create"
+    EMPLOYEE_MANAGE = "employee.manage"
+
 
 class Scope:
     PLATFORM = "platform"
@@ -59,6 +64,8 @@ ROLE_PERMISSIONS = {
         Perm.DEPARTMENT_VIEW,
         Perm.DEPARTMENT_MANAGE,
         Perm.EMPLOYEE_VIEW,
+        Perm.EMPLOYEE_CREATE,
+        Perm.EMPLOYEE_MANAGE,
         Perm.RESERVATION_VIEW,
         Perm.REPORT_ORDERS,
         Perm.REPORT_FINANCIAL,
@@ -77,6 +84,7 @@ ROLE_PERMISSIONS = {
         Perm.ORG_MANAGE,
         Perm.ORG_ASSIGN_ADMIN,
         Perm.DEPARTMENT_VIEW,
+        Perm.EMPLOYEE_VIEW,
     },
     Role.RESTAURANT_MANAGER: {
         Perm.ORG_VIEW,
@@ -96,6 +104,8 @@ ROLE_PERMISSIONS = {
         Perm.DEPARTMENT_VIEW,
         Perm.DEPARTMENT_ASSIGN_ADMIN,
         Perm.EMPLOYEE_VIEW,
+        Perm.EMPLOYEE_CREATE,
+        Perm.EMPLOYEE_MANAGE,
         Perm.RESERVATION_VIEW,
         Perm.REPORT_ORDERS,
         Perm.REPORT_FINANCIAL,
@@ -106,6 +116,7 @@ ROLE_PERMISSIONS = {
         Perm.DEPARTMENT_VIEW,
         Perm.EMPLOYEE_VIEW,
         Perm.EMPLOYEE_CREATE,
+        Perm.EMPLOYEE_MANAGE,
         Perm.RESERVATION_VIEW,
         Perm.REPORT_ORDERS,
         Perm.MENU_VIEW,
