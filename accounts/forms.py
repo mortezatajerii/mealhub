@@ -17,9 +17,13 @@ class UserCreationForm(forms.ModelForm):
         min_length=8,
     )
     password2 = forms.CharField(
-        label="تأیید رمز عبور",
+        label="تکرار رمز عبور",
         widget=forms.PasswordInput(
-            attrs={"class": "form-control", "placeholder": "تکرار رمز عبور"}
+            attrs={
+                "class": "form-control",
+                "placeholder": "رمز عبور را دوباره وارد کنید",
+                "autocomplete": "new-password",
+            }
         ),
     )
 
@@ -110,16 +114,6 @@ class LoginForm(forms.Form):
             attrs={
                 "class": "form-control",
                 "placeholder": "رمز عبور خود را وارد کنید",
-                "autocomplete": "new-password",
-            }
-        ),
-    )
-    password2 = forms.CharField(
-        label="تکرار رمز عبور",
-        widget=forms.PasswordInput(
-            attrs={
-                "class": "form-control",
-                "placeholder": "رمز عبور را دوباره وارد کنید",
                 "autocomplete": "new-password",
             }
         ),
