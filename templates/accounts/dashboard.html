@@ -1,143 +1,170 @@
-{% extends 'base.html' %} {% load static %} {% block title %}داشبورد
-{% endblock %} {% block head_extra %}
-<style>
-  /* Inbo Design System — Dashboard scope */
-  .inbo-dashboard {
-    --inbo-surface: #ffffff;
-    --inbo-border: #e8e8ef;
-    --inbo-primary: #4f46e5;
-    --inbo-muted: #6b7280;
-    --inbo-radius: 1rem;
-  }
-  .inbo-dashboard .inbo-card {
-    background: var(--inbo-surface);
-    border: 1px solid var(--inbo-border);
-    border-radius: var(--inbo-radius);
-    padding: 1.5rem;
-    height: 100%;
-  }
-  .inbo-dashboard .inbo-card-title {
-    font-size: 0.85rem;
-    color: var(--inbo-muted);
-    margin-bottom: 0.5rem;
-  }
-  .inbo-dashboard .inbo-stat {
-    font-size: 1.6rem;
-    font-weight: 700;
-  }
-  .inbo-dashboard .inbo-badge-role {
-    background: color-mix(in srgb, var(--inbo-primary) 12%, white);
-    color: var(--inbo-primary);
-    border-radius: 999px;
-    padding: 0.25rem 0.85rem;
-    font-size: 0.8rem;
-  }
-  .inbo-dashboard .inbo-avatar {
-    width: 64px;
-    height: 64px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid var(--inbo-border);
-  }
-  .inbo-dashboard .table thead th {
-    color: var(--inbo-muted);
-    font-weight: 500;
-    border-bottom-color: var(--inbo-border);
-  }
-</style>
-{% endblock %} {% block content %}
-<div class="container my-5 inbo-dashboard">
-  <!-- Header row -->
-  <div
-    class="d-flex align-items-center justify-content-between mb-4 flex-wrap gap-3"
-  >
-    <div class="d-flex align-items-center gap-3">
-      {% if user.profile.avatar %}
-      <img
-        src="{{ user.profile.avatar.url }}"
-        alt="آواتار"
-        class="inbo-avatar"
-      />
-      {% else %}
-      <img
-        src="{% static 'img/avatar-placeholder.png' %}"
-        alt="آواتار"
-        class="inbo-avatar"
-      />
-      {% endif %}
-      <div>
-        <h1 class="h4 mb-1">
-          سلام، {{ user.full_name|default:user.phone_number }}
-        </h1>
-        <span class="inbo-badge-role">{{ user.get_role_display }}</span>
-      </div>
-    </div>
-    <div class="d-flex gap-2">
-      <a href="{% url 'accounts:logout' %}" class="btn btn-outline-danger"
-        >خروج</a
-      >
-    </div>
-  </div>
+{% extends 'base.html' %}
+{% load static %}
 
-  <!-- Stats row -->
-  <div class="row g-3 mb-4">
-    <div class="col-md-4">
-      <div class="inbo-card">
-        <div class="inbo-card-title">موجودی کیف پول</div>
-        <div class="inbo-stat">
-          {{ wallet.balance|default:0 }}
-          <small class="text-muted fs-6">تومان</small>
+{% block title %}داشبورد | {{ site_settings.site_title }}{% endblock %}
+
+{% block meta_description %}
+داشبورد کاربری {{ site_settings.site_title }}
+{% endblock %}
+
+{% block content %}
+<div class="rn-section-gap section-separator">
+  <div class="container">
+
+    <!-- Dashboard Header -->
+    <div
+      class="inbo-dashboard-header"
+      data-aos="fade-up"
+      data-aos-duration="500"
+      data-aos-once="true"
+    >
+      <div class="d-flex align-items-center justify-content-between flex-wrap gap-3">
+        <div class="d-flex align-items-center gap-3">
+          {% if user.profile.avatar %}
+            <img
+              src="{{ user.profile.avatar.url }}"
+              alt="آواتار {{ user.full_name|default:user.phone_number }}"
+              class="inbo-dashboard-avatar"
+            />
+          {% else %}
+            <img
+              src="{% static 'images/avatar-placeholder.png' %}"
+              alt="آواتار پیش‌فرض"
+              class="inbo-dashboard-avatar"
+            />
+          {% endif %}
+
+          <div>
+            <h1 class="h4 mb-2">
+              سلام، {{ user.full_name|default:user.phone_number }} 👋
+            </h1>
+            <span class="inbo-dashboard-badge">
+              {{ user.get_role_display }}
+            </span>
+          </div>
+        </div>
+
+        <div class="d-flex gap-2">
+          <a
+            href="{% url 'accounts:logout' %}"
+            class="rn-btn btn-border-gradient"
+          >
+            <span>خروج</span>
+          </a>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="inbo-card">
-        <div class="inbo-card-title">سازمان</div>
-        <div class="inbo-stat fs-5">
-          {{ user.organization.name|default:"—" }}
+
+    <!-- Section Title -->
+    <div
+      class="row"
+      data-aos="fade-up"
+      data-aos-duration="500"
+      data-aos-delay="100"
+      data-aos-once="true"
+    >
+      <div class="col-12">
+        <div class="section-title text-center mb-5">
+          <span class="subtitle">اطلاعات حساب</span>
+          <h2 class="title">خلاصه وضعیت</h2>
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-      <div class="inbo-card">
-        <div class="inbo-card-title">واحد</div>
-        <div class="inbo-stat fs-5">{{ user.department.name|default:"—" }}</div>
+
+    <!-- Stats Grid -->
+    <div
+      class="row g-4 mb-5"
+      data-aos="fade-up"
+      data-aos-duration="600"
+      data-aos-delay="200"
+      data-aos-once="true"
+    >
+      <div class="col-md-4">
+        <div class="inbo-dashboard-card">
+          <div class="inbo-dashboard-card-title">موجودی کیف پول</div>
+          <div class="inbo-dashboard-stat">
+            {{ wallet.balance|default:0|floatformat:0 }}
+            <span class="inbo-dashboard-stat-unit">تومان</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="inbo-dashboard-card">
+          <div class="inbo-dashboard-card-title">سازمان</div>
+          <div class="inbo-dashboard-stat" style="font-size: 1.25rem;">
+            {{ user.organization.name|default:"—" }}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="inbo-dashboard-card">
+          <div class="inbo-dashboard-card-title">واحد</div>
+          <div class="inbo-dashboard-stat" style="font-size: 1.25rem;">
+            {{ user.department.name|default:"—" }}
+          </div>
+        </div>
       </div>
     </div>
-  </div>
 
-  <!-- Transactions -->
-  <div class="inbo-card">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <h2 class="h6 mb-0">آخرین تراکنش‌ها</h2>
+    <!-- Transactions Section -->
+    <div
+      class="row"
+      data-aos="fade-up"
+      data-aos-duration="600"
+      data-aos-delay="300"
+      data-aos-once="true"
+    >
+      <div class="col-12">
+        <div class="section-title text-center mb-4">
+          <span class="subtitle">تاریخچه مالی</span>
+          <h2 class="title">آخرین تراکنش‌ها</h2>
+        </div>
+      </div>
     </div>
-    {% if transactions %}
-    <div class="table-responsive">
-      <table class="table align-middle mb-0">
-        <thead>
-          <tr>
-            <th>نوع</th>
-            <th>مبلغ (تومان)</th>
-            <th>توضیحات</th>
-            <th>تاریخ</th>
-          </tr>
-        </thead>
-        <tbody>
-          {% for tx in transactions %}
-          <tr>
-            <td>{{ tx.get_transaction_type_display }}</td>
-            <td>{{ tx.amount }}</td>
-            <td>{{ tx.description|default:"—" }}</td>
-            <td>{{ tx.created_at|date:"Y/m/d H:i" }}</td>
-          </tr>
-          {% endfor %}
-        </tbody>
-      </table>
+
+    <div
+      class="row"
+      data-aos="fade-up"
+      data-aos-duration="600"
+      data-aos-delay="400"
+      data-aos-once="true"
+    >
+      <div class="col-12">
+        <div class="inbo-dashboard-table">
+          {% if transactions %}
+            <div class="table-responsive">
+              <table class="table align-middle">
+                <thead>
+                  <tr>
+                    <th>نوع تراکنش</th>
+                    <th>مبلغ (تومان)</th>
+                    <th>توضیحات</th>
+                    <th>تاریخ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for tx in transactions %}
+                    <tr>
+                      <td>{{ tx.get_transaction_type_display }}</td>
+                      <td>{{ tx.amount|floatformat:0 }}</td>
+                      <td>{{ tx.description|default:"—" }}</td>
+                      <td>{{ tx.created_at|date:"Y/m/d H:i" }}</td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            </div>
+          {% else %}
+            <div class="inbo-dashboard-empty">
+              <p class="mb-0">هنوز تراکنشی ثبت نشده است.</p>
+            </div>
+          {% endif %}
+        </div>
+      </div>
     </div>
-    {% else %}
-    <p class="text-muted mb-0">تراکنشی ثبت نشده است.</p>
-    {% endif %}
+
   </div>
 </div>
 {% endblock %}
-
