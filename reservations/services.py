@@ -2,7 +2,7 @@ import datetime
 from django.contrib.auth import get_user_model
 from django.db import transaction
 from menus.models import DailyMenu
-from wallets.services import reserve_balance 
+from wallets.services import reserve_balance, InsufficientBalanceError
 from .models import Reservation
 
 User = get_user_model()
@@ -46,15 +46,16 @@ def create_weekly_reservations():
                     results["skipped"] += 1
                     continue
 
-                ok = reserve_balance(
-                    organization=user.organization,
-                    amount=default_item.price,
-                    reservation=reservation,
-                )
-                if not ok:
+                try:
+                    reserve_balance(
+                        organization=user.organization,
+                        amount=default_item.price,
+                        reservation=reservation,
+                    )
+                    results["created"] += 1
+                except InsufficientBalanceError:
                     reservation.delete()
                     results["insufficient"] += 1
-                else:
-                    results["created"] += 1
+
 
     return results

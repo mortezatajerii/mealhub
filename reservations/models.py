@@ -18,7 +18,12 @@ class Reservation(models.Model):
     food_item = models.ForeignKey(
         FoodItem, on_delete=models.PROTECT, related_name="reservations"
     )
-    price_snapshot = models.DecimalField(max_digits=10, decimal_places=2)
+    price_snapshot = models.DecimalField(
+        max_digits=10,
+        decimal_places=2,
+        null=True,
+        blank=True,
+    )
     is_finalized = models.BooleanField(default=False)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

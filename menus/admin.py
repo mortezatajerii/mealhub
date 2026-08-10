@@ -13,5 +13,5 @@ class DailyMenuAdmin(admin.ModelAdmin):
     list_display = ("id", "date")
     list_filter = ("date",)
     search_fields = ("items__name", "date")
-    autocomplete_fields = ("food_items",)
+    autocomplete_fields = ("items",)
     date_hierarchy = "date"
