@@ -3,7 +3,7 @@ from .models import User, Role
 
 ROLE_PRIORITY = {
     Role.SUPER_ADMIN: 100,
-    Role.OPERATIONS_MANAGER: 90,
+    Role.PLATFORM_MANAGER: 90,
     Role.MENU_MANAGER: 70,
     Role.ACCOUNT_MANAGER: 70,
     Role.RESTAURANT_MANAGER: 70,

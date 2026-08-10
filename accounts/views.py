@@ -21,7 +21,7 @@ class UserViewSet(ModelViewSet):
     permission_classes = [
         role_required(
             Role.SUPER_ADMIN,
-            Role.OPERATIONS_MANAGER,
+            Role.PLATFORM_MANAGER,
             Role.COMPANY_OWNER,
             Role.DEPARTMENT_ADMIN,
         )

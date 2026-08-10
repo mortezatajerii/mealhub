@@ -79,6 +79,10 @@ class User(AbstractUser):
     def is_platform_user(self):
         return self.role in self.PLATFORM_ROLES
 
+    @property
+    def full_name(self):
+        return self.get_full_name()
+
     def clean(self):
         super().clean()
         if not self.is_platform_user and self.organization_id is None:
