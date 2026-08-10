@@ -1,288 +1,181 @@
-{% load static %}
-<!doctype html>
-<html lang="fa" dir="rtl">
-  <head>
-    <meta charset="utf-8" />
-    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+{% extends "base.html" %}
 
-    <title>
-      {% block title %} {{ site_settings.site_title }} {% endblock %}
-    </title>
+{% block title %}مِیل‌هاب | {{ site_settings.site_title }}{% endblock %}
 
-    <meta
-      name="description"
-      content="{% block meta_description %}{{ site_settings.meta_description }}{% endblock %}"
-    />
+{% block meta_description %}
+مِیل‌هاب؛ مدیریت و برنامه‌ریزی غذای سازمانی
+{% endblock %}
 
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
-    />
+{% block content %}
 
-    {% if site_settings.favicon %}
-    <link
-      rel="shortcut icon"
-      type="image/x-icon"
-      href="{{ site_settings.favicon.url }}"
-    />
-    {% endif %}
+<!-- Start Welcome Area -->
 
-    <!-- Vendor CSS -->
-    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/vendor/slick.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/vendor/slick-theme.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/vendor/aos.css' %}" />
-    <link rel="stylesheet" href="{% static 'css/plugins/feature.css' %}" />
-    <link
-      rel="stylesheet"
-      href="{% static 'css/vendor/fontawesome/css/all.min.css' %}"
-    />
+<div class="rn-section-gap section-separator">
+  <div class="container">
+    <div class="row justify-content-center">
 
-    <!-- Main CSS -->
-    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260805-3" />
 
-    <link
-      rel="stylesheet"
-      href="{% static 'css/brand-override.css' %}?v=20260805-3"
-    />
-  </head>
-
-  <body
-    class="template-color-1 spybody white-version"
-    data-spy="scroll"
-    data-target=".navbar-example2"
-    data-offset="150"
+  <div
+    class="col-lg-10 col-xl-8"
+    data-aos="fade-up"
+    data-aos-duration="700"
+    data-aos-once="true"
   >
-    <!-- =====================================================
-         TOPBAR
-    ====================================================== -->
+    <div class="section-title text-center">
 
-    {% if topbar_ad %}
-    <div class="site-top">
-      <div class="topbar-ad d-block">
-        {% if topbar_ad.link_url %}
-        <a
-          href="{{ topbar_ad.link_url }}"
-          class="topbar-ad__link"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {% endif %} {% if topbar_ad.desktop_image %}
-          <img
-            src="{{ topbar_ad.desktop_image.url }}"
-            alt="تبلیغ"
-            class="topbar-ad__image d-none d-md-block"
-          />
-          {% endif %} {% if topbar_ad.mobile_image %}
-          <img
-            src="{{ topbar_ad.mobile_image.url }}"
-            alt="تبلیغ"
-            class="topbar-ad__image d-md-none"
-          />
-          {% endif %} {% if topbar_ad.link_url %}
-        </a>
+      <span class="subtitle">
+        مِیل‌هاب
+      </span>
+
+      <h1 class="title mb-3">
+        به مِیل‌هاب خوش آمدید
+      </h1>
+
+      <p class="description mb-4">
+        مدیریت ساده و یکپارچه غذای سازمانی؛
+        از انتخاب منو تا مدیریت سفارش‌ها.
+      </p>
+
+      <div class="d-flex justify-content-center gap-3 flex-wrap">
+
+        {% if user.is_authenticated %}
+
+          <a
+            href="#"
+            class="rn-btn"
+          >
+            ورود به پنل
+          </a>
+
+        {% else %}
+
+          <a
+            href="{% url 'accounts:login' %}"
+            class="rn-btn"
+          >
+            ورود به حساب کاربری
+          </a>
+
+          <a
+            href="{% url 'accounts:register' %}"
+            class="rn-btn"
+          >
+            ایجاد حساب کاربری
+          </a>
+
         {% endif %}
+
       </div>
+
     </div>
-    {% endif %}
+  </div>
 
-    <!-- =====================================================
-         HEADER
-    ====================================================== -->
+</div>
 
-    <header
-      class="rn-header haeder-default black-logo-version header--fixed header--sticky"
+
+  </div>
+</div>
+<!-- End Welcome Area -->
+
+<!-- Start Features Area -->
+
+<div class="rn-section-gap section-separator">
+  <div class="container">
+
+
+<div class="row">
+
+  <div class="col-12">
+    <div
+      class="section-title text-center mb-5"
+      data-aos="fade-up"
+      data-aos-duration="500"
+      data-aos-once="true"
     >
-      <div
-        class="header-wrapper rn-popup-mobile-menu m--0 row align-items-center"
-      >
-        <!-- Logo -->
-        <div class="col-lg-2 col-6">
-          <div class="header-left">
-            <div class="logo">
-              <a href="{% url 'home' %}">
-                {% if site_settings.logo_header %}
-                <img
-                  src="{{ site_settings.logo_header.url }}"
-                  alt="{{ site_settings.site_title }}"
-                />
-                {% endif %}
-              </a>
-            </div>
-          </div>
-        </div>
+      <span class="subtitle">
+        امکانات مِیل‌هاب
+      </span>
 
-        <!-- Desktop Navigation -->
-        <div class="col-lg-10 col-6">
-          <div class="header-center">
-            <nav
-              id="sideNav"
-              class="mainmenu-nav navbar-example2 d-none d-xl-block onepagenav"
-            >
-              <ul class="primary-menu nav nav-pills">
-                {% for item in desktop_menu_items %}
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ item.url }}">
-                    {{ item.title }}
-                  </a>
-                </li>
-                {% endfor %} {% if request.user.is_authenticated %}
+      <h2 class="title mb-3">
+        همه‌چیز برای مدیریت بهتر غذا
+      </h2>
 
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'logout' %}"> خروج </a>
-                </li>
-
-                {% else %}
-
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'login' %}"> ورود </a>
-                </li>
-
-                <li class="nav-item">
-                  <a class="nav-link" href="{% url 'register' %}"> ثبت‌نام </a>
-                </li>
-
-                {% endif %}
-              </ul>
-            </nav>
-
-            <!-- Mobile Menu Button -->
-            <div class="humberger-menu d-block d-xl-none">
-              <button
-                class="menu-activation"
-                type="button"
-                aria-label="باز کردن منو"
-              >
-                <i data-feather="menu"></i>
-              </button>
-            </div>
-
-            <div class="header-right"></div>
-          </div>
-        </div>
-      </div>
-    </header>
-
-    <!-- =====================================================
-         MOBILE MENU
-    ====================================================== -->
-
-    <div class="popup-mobile-menu">
-      <div class="inner">
-        <div class="menu-top">
-          <div class="menu-header">
-            <a class="logo" href="{% url 'home' %}">
-              {% if site_settings.logo_header %}
-              <img
-                src="{% static 'images/logo/logos-circle.png' %}?v=20260808-1"
-                alt="Personal Portfolio"
-              />
-              {% endif %}
-            </a>
-
-            <div class="close-button">
-              <button
-                class="close-menu-activation close"
-                type="button"
-                aria-label="بستن منو"
-              >
-                <i data-feather="x"></i>
-              </button>
-            </div>
-          </div>
-
-          <div class="discription">
-            <p>مِیل‌هاب — سامانه هوشمند رزرو غذای سازمانی</p>
-
-            <p>
-              منوی هفتگی، رزرو آنلاین وعده‌ها و مدیریت سفارش‌ها؛ همه در یک پنل
-              ساده و سریع
-            </p>
-          </div>
-        </div>
-
-        <div class="content">
-          <ul class="primary-menu nav nav-pills onepagenav">
-            {% for item in mobile_menu_items %}
-            <li class="nav-item">
-              <a class="nav-link smoth-animation" href="{{ item.url }}">
-                {{ item.title }}
-              </a>
-            </li>
-            {% endfor %} {% if request.user.is_authenticated %}
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'logout' %}"> خروج </a>
-            </li>
-
-            {% else %}
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'login' %}"> ورود </a>
-            </li>
-
-            <li class="nav-item">
-              <a class="nav-link" href="{% url 'register' %}"> ثبت‌نام </a>
-            </li>
-
-            {% endif %}
-          </ul>
-        </div>
-      </div>
+      <p class="description">
+        ابزارهای مورد نیاز سازمان برای مدیریت منو، کارکنان و سفارش‌های غذایی.
+      </p>
     </div>
+  </div>
 
-    <!-- =====================================================
-         MAIN CONTENT
-    ====================================================== -->
-
-    <main class="main-page-wrapper">{% block content %} {% endblock %}</main>
-
-    <!-- =====================================================
-         FOOTER
-    ====================================================== -->
-
-    <footer class="rn-footer-area rn-section-gap section-separator">
-      <div class="container">
-        <div class="row">
-          <div class="col-lg-12">
-            <div class="footer-area text-center">
-              <div class="logo">
-                <a href="{% url 'home' %}">
-                  {% if site_settings.logo_footer %}
-                  <img
-                    src="{{ site_settings.logo_footer.url }}"
-                    alt="{{ site_settings.site_title }}"
-                  />
-                  {% endif %}
-                </a>
-              </div>
-              <p class="description mt--30" dir="rtl">
-                {{ site_settings.footer_copyright }}
-              </p>
-            </div>
-          </div>
-        </div>
+  <div
+    class="col-lg-4 col-md-6 mb-4"
+    data-aos="fade-up"
+    data-aos-duration="700"
+    data-aos-once="true"
+  >
+    <div class="inbo-home-feature">
+      <div class="inbo-home-feature-icon">
+        <i class="feather-users"></i>
       </div>
-    </footer>
 
-    <!-- =====================================================
-         JAVASCRIPT
-    ====================================================== -->
+      <h4>
+        مدیریت کارکنان
+      </h4>
 
-    <script src="{% static 'js/vendor/jquery.js' %}"></script>
-    <script src="{% static 'js/vendor/modernizer.min.js' %}"></script>
-    <script src="{% static 'js/vendor/feather.min.js' %}"></script>
-    <script src="{% static 'js/vendor/slick.min.js' %}"></script>
-    <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
-    <script src="{% static 'js/vendor/text-type.js' %}"></script>
-    <script src="{% static 'js/vendor/wow.js' %}"></script>
-    <script src="{% static 'js/vendor/aos.js' %}"></script>
-    <script src="{% static 'js/vendor/particles.js' %}"></script>
-    <script src="{% static 'js/vendor/jquery-one-page-nav.js' %}"></script>
-    <!-- main JS -->
-    <script src="{% static 'js/main.js' %}"></script>
-    <script>
-      feather.replace();
-    </script>
-  </body>
-</html>
+      <p>
+        مدیریت اطلاعات کارکنان و دسترسی آن‌ها به خدمات سازمانی.
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="col-lg-4 col-md-6 mb-4"
+    data-aos="fade-up"
+    data-aos-duration="700"
+    data-aos-delay="100"
+    data-aos-once="true"
+  >
+    <div class="inbo-home-feature">
+      <div class="inbo-home-feature-icon">
+        <i class="feather-calendar"></i>
+      </div>
+
+      <h4>
+        مدیریت منوی هفتگی
+      </h4>
+
+      <p>
+        ایجاد، مدیریت و نمایش منوی غذایی هفتگی سازمان.
+      </p>
+    </div>
+  </div>
+
+  <div
+    class="col-lg-4 col-md-6 mb-4"
+    data-aos="fade-up"
+    data-aos-duration="700"
+    data-aos-delay="200"
+    data-aos-once="true"
+  >
+    <div class="inbo-home-feature">
+      <div class="inbo-home-feature-icon">
+        <i class="feather-shopping-bag"></i>
+      </div>
+
+      <h4>
+        مدیریت سفارش‌ها
+      </h4>
+
+      <p>
+        مدیریت ساده و منظم سفارش‌های غذایی کارکنان.
+      </p>
+    </div>
+  </div>
+
+</div>
+
+
+  </div>
+</div>
+<!-- End Features Area -->
+
+{% endblock %}

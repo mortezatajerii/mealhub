@@ -19,15 +19,31 @@ from django.contrib import admin
 from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
-from . import views
+
+from .views import index
+
+# API routes with prefix
+api_urlpatterns = [
+    path(
+        "accounts/",
+        include(("accounts.urls", "accounts"), namespace="api_accounts"),
+    ),
+    path("organizations/", include("organizations.urls")),
+    path("menus/", include("menus.urls")),
+    path("reservations/", include("reservations.urls")),
+    path("wallets/", include("wallets.urls")),
+]
 
 urlpatterns = [
     path("admin/", admin.site.urls),
-    path("", views.index, name="home"),
-    path("", include("accounts.urls")),
-    path("api/", include("organizations.urls")),
-    path("api/", include("wallets.urls")),
+    # API routes
+    path("api/v1/", include(api_urlpatterns)),
+    # Template-based routes (without prefix)
+    path("accounts/", include("accounts.urls")),
+    # Home page
+    path("", index, name="home"),
 ]
 
-urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
-urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+if settings.DEBUG:
+    urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

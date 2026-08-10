@@ -28,6 +28,7 @@ class Perm:
     # reservations
     RESERVATION_CREATE = "reservation.create"
     RESERVATION_VIEW = "reservation.view"
+    RESERVATION_MANAGE = "reservation.manage"
 
     # reports
     REPORT_ORDERS = "report.orders"
@@ -67,6 +68,7 @@ ROLE_PERMISSIONS = {
         Perm.EMPLOYEE_CREATE,
         Perm.EMPLOYEE_MANAGE,
         Perm.RESERVATION_VIEW,
+        Perm.RESERVATION_MANAGE,
         Perm.REPORT_ORDERS,
         Perm.REPORT_FINANCIAL,
         Perm.INVOICE_VIEW,

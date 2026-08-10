@@ -13,6 +13,7 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 import os
 from pathlib import Path
 from decouple import config
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -222,3 +223,9 @@ SMSIR_TEMPLATE_ID = config("SMSIR_TEMPLATE_ID", default=0, cast=int)
 
 # OTP
 OTP_TTL_SECONDS = 180
+
+# Login
+
+LOGIN_URL = reverse_lazy("accounts:login")
+LOGIN_REDIRECT_URL = reverse_lazy("accounts:dashboard")
+LOGOUT_REDIRECT_URL = "/"

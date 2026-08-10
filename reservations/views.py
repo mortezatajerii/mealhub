@@ -5,7 +5,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 from rest_framework.exceptions import PermissionDenied
 
-from accounts.permissions import IsAdminRole
+from accounts.permissions import HasPermission, Perm
 
 from .models import Reservation
 from .serializers import ReservationSerializer
@@ -19,8 +19,13 @@ def _is_past_cutoff():
 
 class ReservationViewSet(viewsets.ModelViewSet):
     serializer_class = ReservationSerializer
-    permission_classes = [permissions.IsAuthenticated]
-    http_method_names = ["get", "patch", "head", "options"]
+    permission_classes = [HasPermission]
+    permission_map = {
+        "list": Perm.RESERVATION_VIEW,
+        "retrieve": Perm.RESERVATION_VIEW,
+        "create": Perm.RESERVATION_CREATE,
+    }
+    http_method_names = ["get", "post", "patch", "head", "options"]
 
     def get_queryset(self):
         user = self.request.user
@@ -40,7 +45,7 @@ class ReservationViewSet(viewsets.ModelViewSet):
             raise PermissionDenied()
         return super().partial_update(request, *args, **kwargs)
 
-    @action(detail=False, methods=["post"], permission_classes=[IsAdminRole])
+    @action(detail=False, methods=["post"], permission_classes=[HasPermission])
     def generate_week(self, request):
         created = create_weekly_reservations()
         return Response({"created": created})

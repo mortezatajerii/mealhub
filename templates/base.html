@@ -1,0 +1,463 @@
+{% load static %}
+<!doctype html>
+<html lang="fa" dir="rtl">
+  <head>
+    <meta charset="utf-8" />
+    <meta http-equiv="x-ua-compatible" content="ie=edge" />
+
+    <title>
+      {% block title %} {{ site_settings.site_title }} {% endblock %}
+    </title>
+
+    <meta
+      name="description"
+      content="{% block meta_description %}{{ site_settings.meta_description }}{% endblock %}"
+    />
+
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, shrink-to-fit=no"
+    />
+
+    {% if site_settings.favicon %}
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="{{ site_settings.favicon.url }}"
+    />
+    {% endif %}
+
+    <!-- Vendor CSS -->
+    <link rel="stylesheet" href="{% static 'css/vendor/bootstrap.min.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/slick.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/slick-theme.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/vendor/aos.css' %}" />
+    <link rel="stylesheet" href="{% static 'css/plugins/feature.css' %}" />
+    <link
+      rel="stylesheet"
+      href="{% static 'css/vendor/fontawesome/css/all.min.css' %}"
+    />
+
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="{% static 'css/style.css' %}?v=20260805-3" />
+    <link rel="stylesheet" href="{% static 'css/signup.css' %}?v=20260805-3" />
+
+    <link
+      rel="stylesheet"
+      href="{% static 'css/brand-override.css' %}?v=20260805-3"
+    />
+  </head>
+
+  <body
+    class="template-color-1 spybody white-version"
+    data-spy="scroll"
+    data-target=".navbar-example2"
+    data-offset="150"
+  >
+    <!-- =====================================================
+         HEADER
+    ====================================================== -->
+
+    <header
+      class="rn-header haeder-default black-logo-version header--fixed header--sticky"
+    >
+      <div
+        class="header-wrapper rn-popup-mobile-menu m--0 row align-items-center"
+      >
+        <!-- Logo -->
+        <div class="col-lg-2 col-6">
+          <div class="header-left">
+            <div class="logo">
+              <a href="{% url 'home' %}">
+                {% if site_settings.logo_header %}
+                <img
+                  src="{{ site_settings.logo_header.url }}"
+                  alt="{{ site_settings.site_title }}"
+                />
+                {% endif %}
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Desktop Navigation -->
+        <div class="col-lg-10 col-6">
+          <div class="header-center">
+            <nav
+              id="sideNav"
+              class="mainmenu-nav navbar-example2 d-none d-xl-block onepagenav"
+            >
+              <ul class="primary-menu nav nav-pills">
+                {% for item in desktop_menu_items %}
+                <li class="nav-item">
+                  <a class="nav-link" href="{{ item.url }}">
+                    {{ item.title }}
+                  </a>
+                </li>
+                {% endfor %}
+              </ul>
+            </nav>
+            <!-- Desktop User Actions -->
+            <div class="inbo-header-actions">
+              {% if request.user.is_authenticated %}
+              <a
+                href="{% url 'accounts:dashboard' %}"
+                class="inbo-user-button"
+                aria-label="ورود به داشبورد"
+              >
+                <span class="inbo-user-avatar">
+                  {% if user.profile.avatar %}
+                  <img
+                    src="{{ user.profile.avatar.url }}"
+                    alt="{{ user.full_name|default:user.phone_number }}"
+                  />
+                  {% else %} <i data-feather="user"></i> {% endif %}
+                </span>
+                <span class="inbo-user-info">
+                  <span class="inbo-user-name">
+                    {{ user.full_name|default:user.phone_number }}
+                  </span>
+                  <span class="inbo-user-role">
+                    {{ user.get_role_display }}
+                  </span>
+                </span>
+                <i
+                  data-feather="chevron-down"
+                  class="inbo-user-chevron"
+                  aria-hidden="true"
+                ></i>
+              </a>
+              <form
+                method="post"
+                action="{% url 'accounts:logout' %}"
+                class="inbo-logout-form"
+              >
+                {% csrf_token %}
+                <button
+                  type="submit"
+                  class="inbo-logout-button"
+                  aria-label="خروج از حساب کاربری"
+                >
+                  <i data-feather="log-out" aria-hidden="true"></i>
+                </button>
+              </form>
+              {% else %}
+              <a
+                href="{% url 'accounts:login' %}"
+                class="rn-btn inbo-login-button"
+              >
+                <i data-feather="log-in" aria-hidden="true"></i>
+                <span>ورود</span>
+              </a>
+              <a
+                href="{% url 'accounts:register' %}"
+                class="rn-btn inbo-register-button"
+              >
+                <i data-feather="user-plus" aria-hidden="true"></i>
+                <span>ثبت‌نام</span>
+              </a>
+              {% endif %}
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <div class="humberger-menu d-block d-xl-none">
+              <button
+                class="menu-activation"
+                type="button"
+                aria-label="باز کردن منو"
+              >
+                <i data-feather="menu"></i>
+              </button>
+            </div>
+
+            <div class="header-right"></div>
+          </div>
+        </div>
+      </div>
+    </header>
+
+    <!-- =====================================================
+         MOBILE MENU
+    ====================================================== -->
+
+    <div class="popup-mobile-menu">
+      <div class="inner">
+        <div class="menu-top">
+          <div class="menu-header">
+            <a class="logo" href="{% url 'home' %}">
+              {% if site_settings.logo_header %}
+              <img
+                src="{% static 'images/logo/logos-circle.png' %}?v=20260808-1"
+                alt="Personal Portfolio"
+              />
+              {% endif %}
+            </a>
+
+            <div class="close-button">
+              <button
+                class="close-menu-activation close"
+                type="button"
+                aria-label="بستن منو"
+              >
+                <i data-feather="x"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="discription">
+            <p>مِیل‌هاب — سامانه هوشمند رزرو غذای سازمانی</p>
+
+            <p>
+              منوی هفتگی، رزرو آنلاین وعده‌ها و مدیریت سفارش‌ها؛ همه در یک پنل
+              ساده و سریع
+            </p>
+          </div>
+        </div>
+
+        <div class="content">
+          <nav aria-label="منوی موبایل">
+            {% for item in mobile_menu_items %}
+            <li class="nav-item">
+              <a class="nav-link smoth-animation" href="{{ item.url }}">
+                {{ item.title }}
+              </a>
+            </li>
+            {% endfor %} {% if request.user.is_authenticated %} django
+            <ul class="primary-menu nav nav-pills onepagenav">
+              {% for item in mobile_menu_items %}
+              <li class="nav-item">
+                <a class="nav-link smoth-animation" href="{{ item.url }}">
+                  {{ item.title }}
+                </a>
+              </li>
+              {% endfor %} {% if request.user.is_authenticated %}
+
+              <!-- User Dashboard -->
+              <li class="nav-item inbo-mobile-account-item">
+                <a
+                  class="nav-link inbo-mobile-user-link"
+                  href="{% url 'accounts:dashboard' %}"
+                >
+                  <span class="inbo-mobile-user-avatar">
+                    {% if user.profile.avatar %}
+                    <img
+                      src="{{ user.profile.avatar.url }}"
+                      alt="{{ user.full_name|default:user.phone_number }}"
+                    />
+                    {% else %}
+                    <i data-feather="user"></i>
+                    {% endif %}
+                  </span>
+
+                  <span class="inbo-mobile-user-details">
+                    <span class="inbo-mobile-user-name">
+                      {{ user.full_name|default:user.phone_number }}
+                    </span>
+
+                    <span class="inbo-mobile-user-role">
+                      {{ user.get_role_display }}
+                    </span>
+                  </span>
+
+                  <i
+                    data-feather="chevron-left"
+                    class="inbo-mobile-user-arrow"
+                  ></i>
+                </a>
+              </li>
+
+              <!-- Logout -->
+              <li class="nav-item">
+                <form
+                  method="post"
+                  action="{% url 'accounts:logout' %}"
+                  class="inbo-mobile-logout-form"
+                >
+                  {% csrf_token %}
+
+                  <button
+                    type="submit"
+                    class="nav-link inbo-mobile-logout-link"
+                  >
+                    <i data-feather="log-out"></i>
+                    <span>خروج از حساب</span>
+                  </button>
+                </form>
+              </li>
+
+              {% else %}
+
+              <!-- Login -->
+              <li class="nav-item">
+                <a
+                  class="nav-link inbo-mobile-action inbo-mobile-login-link"
+                  href="{% url 'accounts:login' %}"
+                >
+                  <i data-feather="log-in"></i>
+                  <span>ورود</span>
+                </a>
+              </li>
+
+              <!-- Register -->
+              <li class="nav-item">
+                <a
+                  class="nav-link inbo-mobile-action inbo-mobile-register-link"
+                  href="{% url 'accounts:register' %}"
+                >
+                  <i data-feather="user-plus"></i>
+                  <span>ثبت‌نام</span>
+                </a>
+              </li>
+
+              {% endif %}
+            </ul>
+          </nav>
+          <!-- Mobile Account -->
+          <div class="inbo-mobile-account">
+            {% if request.user.is_authenticated %}
+
+            <li class="nav-item inbo-mobile-account-item">
+              <a
+                class="nav-link inbo-mobile-user-link"
+                href="{% url 'accounts:dashboard' %}"
+              >
+                <span class="inbo-mobile-user-avatar">
+                  {% if user.profile.avatar %}
+                  <img
+                    src="{{ user.profile.avatar.url }}"
+                    alt="{{ user.full_name|default:user.phone_number }}"
+                  />
+                  {% else %}
+                  <i data-feather="user"></i>
+                  {% endif %}
+                </span>
+
+                <span class="inbo-mobile-user-details">
+                  <span class="inbo-mobile-user-name">
+                    {{ user.full_name|default:user.phone_number }}
+                  </span>
+
+                  <span class="inbo-mobile-user-role">
+                    {{ user.get_role_display }}
+                  </span>
+                </span>
+
+                <i
+                  data-feather="chevron-left"
+                  class="inbo-mobile-user-arrow"
+                ></i>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <form
+                method="post"
+                action="{% url 'accounts:logout' %}"
+                class="inbo-mobile-logout-form"
+              >
+                {% csrf_token %}
+
+                <button type="submit" class="nav-link inbo-mobile-logout-link">
+                  <i data-feather="log-out"></i>
+                  <span>خروج از حساب</span>
+                </button>
+              </form>
+            </li>
+
+            {% else %}
+
+            <li class="nav-item">
+              <a
+                class="nav-link inbo-mobile-action inbo-mobile-login-link"
+                href="{% url 'accounts:login' %}"
+              >
+                <i data-feather="log-in"></i>
+                <span>ورود</span>
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link inbo-mobile-action inbo-mobile-register-link"
+                href="{% url 'accounts:register' %}"
+              >
+                <i data-feather="user-plus"></i>
+                <span>ثبت‌نام</span>
+              </a>
+            </li>
+
+            {% endif %}
+            <a
+              href="{% url 'accounts:login' %}"
+              class="inbo-mobile-action inbo-mobile-login-link"
+            >
+              <i data-feather="log-in" aria-hidden="true"></i> <span>ورود</span>
+            </a>
+            <a
+              href="{% url 'accounts:register' %}"
+              class="inbo-mobile-action inbo-mobile-register-link"
+            >
+              <i data-feather="user-plus" aria-hidden="true"></i>
+              <span>ثبت‌نام</span>
+            </a>
+            {% endif %}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- =====================================================
+         MAIN CONTENT
+    ====================================================== -->
+
+    <main class="main-page-wrapper">{% block content %} {% endblock %}</main>
+
+    <!-- =====================================================
+         FOOTER
+    ====================================================== -->
+
+    <footer class="rn-footer-area rn-section-gap section-separator">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12">
+            <div class="footer-area text-center">
+              <div class="logo">
+                <a href="{% url 'home' %}">
+                  {% if site_settings.logo_footer %}
+                  <img
+                    src="{{ site_settings.logo_footer.url }}"
+                    alt="{{ site_settings.site_title }}"
+                  />
+                  {% endif %}
+                </a>
+              </div>
+              <p class="description mt--30" dir="rtl">
+                {{ site_settings.footer_copyright }}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- =====================================================
+         JAVASCRIPT
+    ====================================================== -->
+
+    <script src="{% static 'js/vendor/jquery.js' %}"></script>
+    <script src="{% static 'js/vendor/modernizer.min.js' %}"></script>
+    <script src="{% static 'js/vendor/feather.min.js' %}"></script>
+    <script src="{% static 'js/vendor/slick.min.js' %}"></script>
+    <script src="{% static 'js/vendor/bootstrap.js' %}"></script>
+    <script src="{% static 'js/vendor/text-type.js' %}"></script>
+    <script src="{% static 'js/vendor/wow.js' %}"></script>
+    <script src="{% static 'js/vendor/aos.js' %}"></script>
+    <script src="{% static 'js/vendor/particles.js' %}"></script>
+    <script src="{% static 'js/vendor/jquery-one-page-nav.js' %}"></script>
+    <!-- main JS -->
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+      feather.replace();
+    </script>
+  </body>
+</html>

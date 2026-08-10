@@ -1,0 +1,1181 @@
+:root {
+  --color-heading: #1f1f25;
+}
+
+/* =========================================================
+INBO HEADER
+========================================================= */
+
+.inbo-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-right: 24px;
+}
+
+/* =========================================================
+USER BUTTON
+========================================================= */
+
+.inbo-user-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 48px;
+  padding: 5px 12px 5px 14px;
+
+  color: var(--color-heading, #1f1f25);
+  text-decoration: none;
+
+  background: #fff;
+
+  /* border: 1px solid rgba(0, 0, 0, 0.08); */
+  border-radius: 999px;
+
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    /* box-shadow 0.25s ease, */ transform 0.25s ease;
+}
+
+.inbo-user-button:hover {
+  color: var(--color-primary, #ff014f);
+
+  border-color: rgba(255, 1, 79, 0.25);
+
+  /* box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08); */
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+USER AVATAR
+========================================================= */
+
+.inbo-user-avatar {
+  width: 36px;
+  height: 36px;
+
+  flex: 0 0 36px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  border-radius: 50%;
+
+  background: #f4f4f7;
+
+  color: var(--color-primary, #ff014f);
+}
+
+.inbo-user-avatar img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.inbo-user-avatar svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* =========================================================
+USER INFORMATION
+========================================================= */
+
+.inbo-user-info {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+
+  min-width: 0;
+  line-height: 1.3;
+}
+
+.inbo-user-name {
+  max-width: 150px;
+
+  overflow: hidden;
+
+  font-size: 13px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inbo-user-role {
+  margin-top: 2px;
+
+  color: #8c8c94;
+
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.inbo-user-chevron {
+  width: 15px;
+  height: 15px;
+
+  flex: 0 0 15px;
+
+  color: #999;
+}
+
+/* =========================================================
+LOGOUT
+========================================================= */
+
+.inbo-logout-form {
+  margin: 0;
+}
+
+.inbo-logout-button {
+  width: 44px;
+  height: 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0;
+
+  color: var(--color-primary, #ff014f);
+
+  background: transparent;
+
+  border: 1px solid rgba(255, 1, 79, 0.15);
+  border-radius: 50%;
+
+  cursor: pointer;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inbo-logout-button svg {
+  width: 18px;
+  height: 18px;
+}
+
+.inbo-logout-button:hover {
+  color: #fff;
+
+  background: var(--color-primary, #ff014f);
+  border-color: var(--color-primary, #ff014f);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+GUEST BUTTONS
+========================================================= */
+
+.inbo-login-button,
+.inbo-register-button {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+
+  min-height: 44px;
+  padding: 0 18px;
+
+  white-space: nowrap;
+}
+
+.inbo-login-button svg,
+.inbo-register-button svg {
+  width: 17px;
+  height: 17px;
+}
+
+.inbo-login-button {
+  background: transparent;
+}
+
+.inbo-register-button {
+  min-width: 105px;
+}
+
+/* =========================================================
+MOBILE MENU ACCOUNT
+========================================================= */
+
+.inbo-mobile-account {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  margin-top: 30px;
+  padding-top: 24px;
+
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
+}
+
+/* =========================================================
+MOBILE USER
+========================================================= */
+
+.inbo-mobile-user-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  padding: 12px;
+
+  color: var(--color-heading, #1f1f25);
+  text-decoration: none;
+
+  background: #f8f8fa;
+
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  border-radius: 14px;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inbo-mobile-user-link:hover {
+  background: #fff;
+
+  border-color: rgba(255, 1, 79, 0.2);
+
+  transform: translateY(-1px);
+}
+
+/* =========================================================
+MOBILE USER AVATAR
+========================================================= */
+
+.inbo-mobile-user-avatar {
+  width: 44px;
+  height: 44px;
+
+  flex: 0 0 44px;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  overflow: hidden;
+
+  color: var(--color-primary, #ff014f);
+
+  background: #fff;
+
+  border-radius: 50%;
+}
+
+.inbo-mobile-user-avatar img {
+  width: 100%;
+  height: 100%;
+
+  display: block;
+
+  object-fit: cover;
+}
+
+.inbo-mobile-user-avatar svg {
+  width: 20px;
+  height: 20px;
+}
+
+/* =========================================================
+MOBILE USER DETAILS
+========================================================= */
+
+.inbo-mobile-user-details {
+  display: flex;
+  flex-direction: column;
+
+  min-width: 0;
+
+  flex: 1;
+}
+
+.inbo-mobile-user-name {
+  overflow: hidden;
+
+  font-size: 14px;
+  font-weight: 700;
+
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inbo-mobile-user-role {
+  margin-top: 3px;
+
+  color: #8c8c94;
+
+  font-size: 12px;
+}
+
+.inbo-mobile-user-arrow {
+  width: 18px;
+  height: 18px;
+
+  color: #999;
+}
+
+/* =========================================================
+MOBILE ACTION
+========================================================= */
+
+.inbo-mobile-action,
+.inbo-mobile-logout-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  width: 100%;
+  min-height: 48px;
+
+  padding: 0 14px;
+
+  color: var(--color-heading, #1f1f25);
+  text-decoration: none;
+
+  background: transparent;
+
+  border: 1px solid rgba(0, 0, 0, 0.07);
+  border-radius: 12px;
+
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.inbo-mobile-action svg,
+.inbo-mobile-logout-link svg {
+  width: 18px;
+  height: 18px;
+}
+
+.inbo-mobile-action:hover {
+  color: var(--color-primary, #ff014f);
+
+  background: rgba(255, 1, 79, 0.04);
+
+  border-color: rgba(255, 1, 79, 0.15);
+}
+
+/* =========================================================
+MOBILE LOGIN
+========================================================= */
+
+.inbo-mobile-login-link:hover {
+  color: var(--color-primary, #ff014f);
+}
+
+/* =========================================================
+MOBILE REGISTER
+========================================================= */
+
+.inbo-mobile-register-link {
+  color: #fff;
+
+  background: var(--color-primary, #ff014f);
+
+  border-color: var(--color-primary, #ff014f);
+}
+
+.inbo-mobile-register-link:hover {
+  color: #fff;
+
+  background: var(--color-primary, #ff014f);
+}
+
+/* =========================================================
+MOBILE LOGOUT
+========================================================= */
+
+.inbo-mobile-logout-form {
+  margin: 0;
+}
+
+.inbo-mobile-logout-link {
+  justify-content: flex-start;
+
+  color: var(--color-primary, #ff014f);
+
+  font-family: inherit;
+  font-size: inherit;
+
+  cursor: pointer;
+}
+
+.inbo-mobile-logout-link:hover {
+  color: #fff;
+
+  background: var(--color-primary, #ff014f);
+
+  border-color: var(--color-primary, #ff014f);
+}
+
+/* =========================================================
+TABLET / MOBILE HEADER
+========================================================= */
+
+@media (max-width: 1199px) {
+  .inbo-header-actions {
+    display: none;
+  }
+
+  .rn-header .header-wrapper {
+    padding-left: 20px;
+    padding-right: 20px;
+  }
+
+  .rn-header .header-left {
+    flex: 0 0 auto;
+  }
+
+  .rn-header .header-center {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
+    width: 100%;
+  }
+
+  .rn-header .mainmenu-nav {
+    display: none;
+  }
+
+  .rn-header .humberger-menu {
+    display: block;
+  }
+}
+
+/* =========================================================
+MOBILE
+========================================================= */
+
+@media (max-width: 767px) {
+  .rn-header .header-wrapper {
+    padding-left: 15px;
+    padding-right: 15px;
+  }
+
+  .rn-header .logo img {
+    max-width: 150px;
+    height: auto;
+  }
+
+  .inbo-mobile-account {
+    margin-top: 24px;
+    padding-top: 20px;
+  }
+
+  .inbo-mobile-user-link {
+    padding: 10px;
+  }
+
+  .inbo-mobile-user-avatar {
+    width: 42px;
+    height: 42px;
+
+    flex-basis: 42px;
+  }
+}
+
+/* =========================================================
+SMALL PHONES
+========================================================= */
+
+@media (max-width: 575px) {
+  .rn-header .header-wrapper {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .rn-header .logo img {
+    max-width: 135px;
+  }
+
+  .inbo-mobile-account {
+    margin-top: 20px;
+  }
+}
+
+/* =========================================================
+VERY SMALL PHONES
+========================================================= */
+
+@media (max-width: 399px) {
+  .rn-header .logo img {
+    max-width: 120px;
+  }
+
+  .inbo-mobile-user-name {
+    font-size: 13px;
+  }
+
+  .inbo-mobile-user-role {
+    font-size: 11px;
+  }
+}
+
+/* =========================================================
+REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+  .inbo-user-button,
+  .inbo-logout-button,
+  .inbo-mobile-user-link,
+  .inbo-mobile-action,
+  .inbo-mobile-logout-link {
+    transition: none;
+  }
+
+  .inbo-user-button:hover,
+  .inbo-logout-button:hover,
+  .inbo-mobile-user-link:hover {
+    transform: none;
+  }
+}
+
+/* =========================================================
+   MOBILE AUTH BUTTONS
+   Keep Login / Register text visible
+   ========================================================= */
+
+@media (max-width: 1199px) {
+  .inbo-login-button span,
+  .inbo-register-button span {
+    display: inline;
+  }
+
+  .inbo-login-button,
+  .inbo-register-button {
+    width: auto;
+    min-width: 0;
+    height: 44px;
+
+    padding: 0 14px;
+
+    border-radius: 999px;
+
+    gap: 6px;
+  }
+
+  .inbo-login-button svg,
+  .inbo-register-button svg {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+@media (max-width: 767px) {
+  .inbo-header-actions {
+    gap: 6px;
+    margin-right: 6px;
+  }
+
+  .inbo-login-button,
+  .inbo-register-button {
+    height: 40px;
+    padding: 0 12px;
+
+    font-size: 13px;
+  }
+
+  .inbo-login-button svg,
+  .inbo-register-button svg {
+    width: 15px;
+    height: 15px;
+  }
+}
+
+@media (max-width: 399px) {
+  .inbo-header-actions {
+    gap: 5px;
+    margin-right: 3px;
+  }
+
+  .inbo-login-button,
+  .inbo-register-button {
+    height: 38px;
+    padding: 0 9px;
+
+    font-size: 12px;
+  }
+
+  .inbo-login-button svg,
+  .inbo-register-button svg {
+    width: 14px;
+    height: 14px;
+  }
+}
+/* =========================================================
+   INBO AUTH / REGISTER
+========================================================= */
+.inbo-auth {
+  width: 100%;
+} /* ========================================================= AUTH SHELL ========================================================= */
+.inbo-auth-shell {
+  width: 100%;
+  min-height: calc(100vh - 180px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 70px 20px;
+} /* ========================================================= AUTH CARD ========================================================= */
+.inbo-auth-card {
+  width: 100%;
+  max-width: 520px;
+  padding: 42px 40px;
+  background: #ffffff;
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+  box-shadow: none;
+} /* ========================================================= AUTH HEADER ========================================================= */
+.inbo-auth-header {
+  margin-bottom: 32px;
+  text-align: center;
+}
+.inbo-auth-title {
+  margin: 0 0 10px;
+  color: var(--color-heading, #1f1f25);
+  font-size: 28px;
+  font-weight: 700;
+  line-height: 1.5;
+}
+.inbo-auth-subtitle {
+  max-width: 400px;
+  margin: 0 auto;
+  color: #878787;
+  font-size: 14px;
+  line-height: 1.9;
+} /* ========================================================= ALERTS ========================================================= */
+.inbo-auth-alert {
+  margin-bottom: 20px;
+  border-radius: 6px;
+} /* ========================================================= FORM ========================================================= */
+.inbo-auth form {
+  width: 100%;
+} /* ========================================================= FORM FIELD ========================================================= */
+.inbo-auth-field {
+  width: 100%;
+  margin-bottom: 22px;
+}
+.inbo-auth-field:last-of-type {
+  margin-bottom: 28px;
+} /* ========================================================= LABEL ========================================================= */
+.inbo-auth-field .form-label {
+  display: block;
+  margin-bottom: 9px;
+  color: var(--color-heading, #1f1f25);
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.6;
+} /* ========================================================= INPUT ========================================================= */
+.inbo-auth-field .form-control {
+  display: block;
+  width: 100%;
+  min-height: 50px;
+  padding: 10px 15px;
+  color: var(--color-heading, #1f1f25);
+  background: #ffffff;
+  border: 1px solid #dcdde2;
+  border-radius: 6px;
+  outline: none;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+} /* Placeholder */
+.inbo-auth-field .form-control::placeholder {
+  color: #a0a0a8;
+} /* Hover */
+.inbo-auth-field .form-control:hover {
+  border-color: #c8c9cf;
+} /* Focus */
+.inbo-auth-field .form-control:focus {
+  border-color: var(--color-primary, #ff014f);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(255, 1, 79, 0.08);
+  outline: none;
+}
+/* =========================
+   HELP TEXT
+   ========================= */
+
+.inbo-auth-field .form-text {
+  margin-top: 8px;
+
+  color: #878787;
+
+  font-size: 12px;
+  line-height: 1.8;
+}
+
+/* =========================
+   FIELD ERRORS
+   ========================= */
+
+.inbo-auth-field-errors {
+  margin-top: 7px;
+}
+
+.inbo-auth-field-errors .text-danger {
+  line-height: 1.7;
+}
+
+/* =========================
+   SUBMIT
+   ========================= */
+
+.inbo-auth-submit {
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  border-radius: 6px;
+
+  font-size: 14px;
+  font-weight: 500;
+}
+
+/* ========================================================= NON FIELD ERRORS ========================================================= */
+.inbo-auth .alert-danger {
+  border: 1px solid rgba(220, 53, 69, 0.15);
+  font-size: 13px;
+  line-height: 1.8;
+}
+
+/* =========================
+   FOOTER
+   ========================= */
+
+.inbo-auth-footer {
+  margin-top: 25px;
+
+  color: #878787;
+
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+.inbo-auth-footer a {
+  margin-right: 5px;
+
+  color: var(--color-primary, #ff014f);
+
+  font-weight: 500;
+
+  text-decoration: none;
+}
+
+.inbo-auth-footer a:hover {
+  text-decoration: underline;
+}
+
+/* =========================================================
+   MOBILE
+   ========================================================= */
+
+@media (max-width: 767px) {
+  .inbo-auth-card {
+    padding: 30px 24px;
+  }
+
+  .inbo-auth-field {
+    margin-bottom: 20px;
+  }
+
+  .inbo-auth-field .form-control {
+    min-height: 48px;
+  }
+}
+
+@media (max-width: 575px) {
+  .inbo-auth-card {
+    padding: 25px 18px;
+
+    border-radius: 8px;
+  }
+
+  .inbo-auth-submit {
+    min-height: 48px;
+  }
+}
+
+/* ========================================================= FOOTER ========================================================= */
+.inbo-auth-footer {
+  margin-top: 28px;
+  padding-top: 22px;
+  text-align: center;
+  border-top: 1px solid #eeeeef;
+  color: #878787;
+  font-size: 14px;
+  line-height: 1.8;
+}
+.inbo-auth-footer .text-muted {
+  color: #878787 !important;
+}
+.inbo-auth-footer a {
+  margin-right: 5px;
+  color: var(--color-primary, #ff014f);
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+.inbo-auth-footer a:hover {
+  color: #e60046;
+  text-decoration: underline;
+} /* ========================================================= RESPONSIVE ========================================================= */
+@media (max-width: 767px) {
+  .inbo-auth-shell {
+    min-height: auto;
+    padding: 50px 20px;
+  }
+  .inbo-auth-card {
+    max-width: 100%;
+    padding: 32px 28px;
+  }
+  .inbo-auth-title {
+    font-size: 24px;
+  }
+  .inbo-auth-subtitle {
+    font-size: 13px;
+  }
+  .inbo-auth-field {
+    margin-bottom: 20px;
+  }
+  .inbo-auth-field .form-control {
+    min-height: 48px;
+  }
+  .inbo-auth-submit,
+  .inbo-auth form .btn-primary {
+    min-height: 48px;
+  }
+} /* ========================================================= SMALL PHONES ========================================================= */
+@media (max-width: 575px) {
+  .inbo-auth-shell {
+    padding: 35px 15px;
+  }
+  .inbo-auth-card {
+    padding: 28px 20px;
+    border-radius: 8px;
+  }
+  .inbo-auth-header {
+    margin-bottom: 26px;
+  }
+  .inbo-auth-title {
+    font-size: 22px;
+  }
+  .inbo-auth-footer {
+    margin-top: 24px;
+    padding-top: 20px;
+  }
+}
+/* =========================================================
+REGISTER CARD ALIGNMENT
+========================================================= */
+
+.inbo-auth-card {
+  width: 100%;
+  max-width: 760px;
+  margin-inline: auto;
+}
+/* =========================================================
+AUTH SUBMIT BUTTON
+========================================================= */
+
+.inbo-auth-submit {
+  width: 100%;
+  min-height: 50px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 0 24px;
+
+  color: #fff !important;
+  background: var(--color-primary, #ff014f) !important;
+
+  border: 1px solid var(--color-primary, #ff014f) !important;
+  border-radius: 6px;
+
+  box-shadow: none !important;
+
+  font-size: 14px;
+  font-weight: 500;
+
+  transition:
+    background-color 0.25s ease,
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inbo-auth-submit:hover {
+  color: #fff !important;
+
+  background: #e60046 !important;
+  border-color: #e60046 !important;
+
+  box-shadow: none !important;
+
+  transform: translateY(-1px);
+}
+
+.inbo-auth-submit:focus,
+.inbo-auth-submit:active {
+  color: #fff !important;
+
+  background: var(--color-primary, #ff014f) !important;
+  border-color: var(--color-primary, #ff014f) !important;
+
+  box-shadow: none !important;
+}
+
+.inbo-auth-submit:focus-visible {
+  outline: 2px solid rgba(255, 1, 79, 0.25);
+  outline-offset: 3px;
+}
+
+.inbo-auth-submit {
+  color: var(--color-primary, #ff014f) !important;
+  background: #fff !important;
+  border: 1px solid var(--color-primary, #ff014f) !important;
+  box-shadow: none !important;
+}
+
+.inbo-auth-submit:hover {
+  color: #fff !important;
+  background: var(--color-primary, #ff014f) !important;
+  border-color: var(--color-primary, #ff014f) !important;
+  box-shadow: none !important;
+}
+/* =========================================================
+   INBO AUTH - REMEMBER ME
+========================================================= */
+
+.inbo-auth-remember {
+  display: flex;
+  align-items: center;
+
+  gap: 9px;
+
+  width: 100%;
+
+  margin: 0 0 28px;
+
+  direction: rtl;
+}
+
+.inbo-auth-remember input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+
+  position: relative;
+
+  width: 18px;
+  height: 18px;
+
+  flex: 0 0 18px;
+
+  margin: 0;
+
+  padding: 0;
+
+  background: #ffffff;
+
+  border: 1px solid #d9d9df;
+  border-radius: 4px;
+
+  cursor: pointer;
+
+  box-shadow: none;
+
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.inbo-auth-remember input[type="checkbox"]:hover {
+  border-color: var(--color-primary, #ff014f);
+}
+
+.inbo-auth-remember input[type="checkbox"]:checked {
+  background-color: var(--color-primary, #ff014f);
+
+  border-color: var(--color-primary, #ff014f);
+}
+
+.inbo-auth-remember input[type="checkbox"]:checked::after {
+  content: "";
+
+  position: absolute;
+
+  top: 2px;
+  left: 5px;
+
+  width: 5px;
+  height: 9px;
+
+  border: solid #ffffff;
+  border-width: 0 2px 2px 0;
+
+  transform: rotate(45deg);
+}
+
+.inbo-auth-remember input[type="checkbox"]:focus {
+  outline: none;
+
+  box-shadow: 0 0 0 3px rgba(255, 1, 79, 0.08);
+}
+
+.inbo-auth-remember-label {
+  display: inline-block;
+
+  margin: 0;
+  padding: 0;
+
+  color: #55555d;
+
+  font-size: 14px;
+  font-weight: 400;
+
+  line-height: 18px;
+
+  cursor: pointer;
+
+  user-select: none;
+}
+
+.inbo-auth-remember-label:hover {
+  color: var(--color-heading, #1f1f25);
+}
+
+/* =========================================================
+   INBO HOME
+========================================================= */
+
+.inbo-home-feature {
+  height: 100%;
+
+  padding: 30px;
+
+  background: #fff;
+
+  border: 1px solid #e6e6e6;
+  border-radius: 10px;
+
+  transition:
+    border-color 0.25s ease,
+    transform 0.25s ease;
+}
+
+.inbo-home-feature:hover {
+  border-color: rgba(255, 1, 79, 0.25);
+
+  transform: translateY(-3px);
+}
+
+.inbo-home-feature-icon {
+  width: 48px;
+  height: 48px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  margin-bottom: 20px;
+
+  color: var(--color-primary, #ff014f);
+
+  background: rgba(255, 1, 79, 0.06);
+
+  border-radius: 8px;
+}
+
+.inbo-home-feature-icon i {
+  font-size: 21px;
+}
+
+.inbo-home-feature h4 {
+  margin-bottom: 10px;
+
+  color: var(--color-heading, #1f1f25);
+
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.inbo-home-feature p {
+  margin-bottom: 0;
+
+  color: #878787;
+
+  font-size: 14px;
+  line-height: 1.9;
+}
+
+@media (max-width: 767px) {
+  .inbo-home-feature {
+    padding: 24px;
+  }
+}
+
+/* =========================================================
+   INBO HOME - TITLE OVERRIDES
+========================================================= */
+
+.inbo-home-title,
+.inbo-home-feature h1,
+.inbo-home-feature h2,
+.inbo-home-feature h3,
+.inbo-home-feature h4,
+.inbo-home-feature h5,
+.inbo-home-feature h6 {
+  color: var(--color-heading, #1f1f25) !important;
+}
+
+.inbo-home-section .section-title .title,
+.inbo-home-section .section-title h1,
+.inbo-home-section .section-title h2,
+.inbo-home-section .section-title h3 {
+  color: var(--color-heading, #1f1f25) !important;
+}
+
+.inbo-home-section .description {
+  color: #878787 !important;
+}
+/* =========================================================
+   INBO WELCOME
+========================================================= */
+
+.inbo-welcome {
+  padding-top: 80px;
+}
+
+@media (max-width: 767px) {
+  .inbo-welcome {
+    padding-top: 55px;
+  }
+}

@@ -94,5 +94,5 @@ class TransactionViewSet(viewsets.ReadOnlyModelViewSet):
         if scope == Scope.PLATFORM:
             return queryset.all()
         if scope == Scope.ORGANIZATION and user.organization_id:
-            return queryset.filter(organization_id=user.organization_id)
+            return queryset.filter(wallet__organization_id=user.organization_id)
         return queryset.none()
